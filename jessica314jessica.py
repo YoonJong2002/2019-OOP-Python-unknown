@@ -1,0 +1,2 @@
+print("+___+")
+print("Hello")
