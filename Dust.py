@@ -2,7 +2,8 @@ import pygame
 from pygame.locals import *
 import numpy as np
 
-coin_img = pygame.image.load('coin.png')
+srf = pygame.display.set_mode((1000, 1000))
+coin_img = pygame.image.load("coin.png")
 dt = 0.05
 t = v = 0
 x = 30 * np.pi / 180    # x는 rad단위
@@ -42,7 +43,7 @@ def solveODEusingRK4(t, x, v):
 
 pygame.init() #초기화
 
-srf = pygame.display.set_mode((1000, 1000))
+
 
 font = pygame.font.SysFont('Vernada.ttf', 25)
 aurthorSrf = font.render('Thanks PinkWink', True, (50, 50, 50))
@@ -75,10 +76,11 @@ while loopFlag:
     pygame.draw.line(srf,(100,0,100),(int(updatedX), int(updatedY)), (int(updatedX+penLength*v*np.cos(-x)), int(updatedY+penLength*v*np.sin(-x))),2)
 
     pygame.draw.line(srf, (0, 0, 0), (10, 20), (290, 20), 10)
-
+    srf.blit(coin_img,(100,100))
+    pygame.display.update()
     pygame.time.delay(40)
     pygame.display.flip()
-    srf.blit(coin_img,(100,100))
+
 loopFlag = True
 t = 0
 v_x = penLength * v * np.cos(-x)
@@ -105,4 +107,3 @@ while loopFlag:
 
     pygame.time.delay(40)
     pygame.display.flip()
-
