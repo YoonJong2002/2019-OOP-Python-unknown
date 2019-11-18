@@ -2,23 +2,29 @@ import pygame
 from pygame.locals import *
 import numpy as np
 
-srf = pygame.display.set_mode((1000, 1000))
+srf_h = 700
+srf_w = 500
+srf = pygame.display.set_mode((srf_h, srf_w))
 
+coin_size = 30
 coin_img = pygame.image.load("coin.png")
-coin_img_set = pygame.transform.scale(coin_img,(30, 30))
+coin_img_set = pygame.transform.scale(coin_img, (coin_size, coin_size))
+
+bucket_h = 80
+bucket_w = 50
 bucket_img = pygame.image.load("bucket.png")
-bucket_img_set = pygame.transform.scale(bucket_img ,(80, 50))
+bucket_img_set = pygame.transform.scale(bucket_img, (bucket_h, bucket_w))
 
 dt = 0.05
 t = v = 0
-x = 30 * np.pi / 180    # x는 rad단위
+x = 30 * np.pi / 180    # x는 rad 단위
 pen_fm = 0.01
 pen_m = 0.1
 pen_l = 100 * 0.01
 pen_J = 0.02
 pen_g = 9.8
-gndCenterX = 150
-gndConterY = 20
+gndCenterX = 350
+gndCenterY = 20
 penLength = pen_l * 100 * 2
 
 
@@ -46,36 +52,28 @@ def solveODEusingRK4(t, x, v):
 
     return x + dx, v + dv
 
+
 pygame.init() #초기화
-
-
-font = pygame.font.SysFont('Vernada.ttf', 25)
-aurthorSrf = font.render('Thanks PinkWink', True, (50, 50, 50))
-
-
 loopFlag = True
-
 global updatedX, updatedY
 
-loopFlag1 = True
-while loopFlag1:
-    for event in pygame.event.get(): # 이 구문은 무엇일까?? 근데 없으면 안된다! :(
-        if event.type == QUIT:
-            loopFlag1 = False
 
-    srf.fill((255, 255, 255))
-    t = t + dt
-    bucketX = 100
-    if bucketX == 100:
-        dX = 1
-    if bucketX == 900:
-        dX = -1
+def bucket_moves(bucketX, bucket_v, dX):
+    if bucketX <= 50:
+        dX = bucket_v
+    if bucketX >= 600:
+        dX = -bucket_v
 
     bucketX = bucketX + dX
-    bucketY = 900
-    srf.blit(bucket_img, (bucketX, bucketY))
+    bucketY = 450
+    srf.blit(bucket_img_set, (bucketX, bucketY))
+    pygame.display.update()
+    return bucketX, bucket_v, dX
 
 
+bucketX = 0
+bucket_v = 5
+dX = bucket_v
 
 while loopFlag:
     for event in pygame.event.get():  # 이 구문은 무엇일까?? 근데 없으면 안된다! :(
@@ -87,17 +85,19 @@ while loopFlag:
 
     srf.fill((255, 255, 255))
 
+    [bucketX, bucket_v, dX] = bucket_moves(bucketX, bucket_v, dX)   # bucket 의 이동.
+
     t = t + dt
     [x, v] = solveODEusingRK4(t, x, v)      # x 는 각변위
     updatedX = gndCenterX + penLength * np.sin(x)
-    updatedY = gndConterY + penLength * np.cos(x)
+    updatedY = gndCenterY + penLength * np.cos(x)
 
-    pygame.draw.line(srf, (100, 100, 100), (gndCenterX, gndConterY), (updatedX, updatedY), 2)
-    srf.blit(coin_img_set, (int(updatedX)-15, int(updatedY)-15))
-    pygame.draw.line(srf, (100, 0, 100) ,(int(updatedX), int(updatedY)), (int(updatedX+penLength*v*np.cos(-x)), int(updatedY+penLength*v*np.sin(-x))),2)
-    pygame.draw.line(srf, (0, 0, 0), (10, 20), (290, 20), 10)
+    pygame.draw.line(srf, (0, 0, 0), (10, 20), (700, 20), 10)   # 줄이 매달린 천장
+    pygame.draw.line(srf, (100, 100, 100), (gndCenterX, gndCenterY), (updatedX, updatedY), 2)   # 줄
+    srf.blit(coin_img_set, (int(updatedX)-15, int(updatedY)-15))    # 동전
+    pygame.draw.line(srf, (100, 0, 100) ,(int(updatedX), int(updatedY)), (int(updatedX+penLength*v*np.cos(-x)), int(updatedY+penLength*v*np.sin(-x))),2)    # 속도 벡터 표시
 
-    pygame.display.update()
+    pygame.display.update()     # 동전은 image, update 를 해야 보임
     pygame.time.delay(40)
     pygame.display.flip()
 
@@ -109,12 +109,19 @@ neworiginX = updatedX
 neworiginY = updatedY
 
 while loopFlag:
-    for event in pygame.event.get(): # 이 구문은 무엇일까?? 근데 없으면 안된다! :(
+    for event in pygame.event.get():
         if event.type == QUIT:
             loopFlag = False
         if event.type == KEYDOWN:
             if event.key == K_RIGHT:
                 loopFlag = False
+    if neworiginY + updatedY >= srf_h - bucket_h:   # neworiginY + updatedY : 코인 중심의 Y, srf_h - bucket_h : 버킷 윗면의 높이
+        if abs((int(updatedX + neworiginX)) - (bucketX + bucket_w/2)) <= bucket_w/2:      # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
+            print('yay')
+        else:
+            print('aww')
+        break
+
 
     srf.fill((255, 255, 255))
 
@@ -122,8 +129,8 @@ while loopFlag:
 
     updatedX = v_x * t
     updatedY = v_y * t + 0.5 * 700 * t**2
-    srf.blit(coin_img_set, (int(updatedX + neworiginX) - 15, int(updatedY + neworiginY) - 15))
-
+    srf.blit(coin_img_set, (int(updatedX + neworiginX) - 15, int(updatedY + neworiginY) - 15))      # 날라가는 동전
+    [bucketX, bucket_v, dX] = bucket_moves(bucketX, bucket_v, dX)       # bucket
 
     pygame.time.delay(40)
     pygame.display.flip()
