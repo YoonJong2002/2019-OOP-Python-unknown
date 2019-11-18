@@ -39,7 +39,7 @@ def opening():
             if event.type == pygame.QUIT:
                 finished = True
             if event.type == pygame.KEYDOWN:
-                finished = True
+                # finished = True 다른걸로!!
 
         opening_screen.fill((255, 255, 255))
         opening_screen.blit(coin_size_img, (70, 80))
