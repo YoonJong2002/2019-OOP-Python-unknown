@@ -1,9 +1,9 @@
 # flow_of_the_game
 
-import class_of_player
-import class_of_coins
-import class_of_buckets
-import opening
-# 이외 import 할 사항들 추가
+# from class_of_player import *
+# from class_of_coins import *
+# from class_of_buckets import *
+from opening import *
 
-opening.opening()
+opening() # opening 모듈의 함수
+enter_id() # opening 모듈의 함수
