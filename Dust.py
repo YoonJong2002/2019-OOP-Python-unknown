@@ -45,7 +45,6 @@ def solveODEusingRK4(t, x, v):
 pygame.init() #초기화
 
 
-
 font = pygame.font.SysFont('Vernada.ttf', 25)
 aurthorSrf = font.render('Thanks PinkWink', True, (50, 50, 50))
 
