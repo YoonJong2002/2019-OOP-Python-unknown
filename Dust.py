@@ -3,8 +3,12 @@ from pygame.locals import *
 import numpy as np
 
 srf = pygame.display.set_mode((1000, 1000))
+
 coin_img = pygame.image.load("coin.png")
-coin_img_small = pygame.transform.scale(coin_img,(30,30))
+coin_img_set = pygame.transform.scale(coin_img,(30, 30))
+bucket_img = pygame.image.load("bucket.png")
+bucket_img_set = pygame.transform.scale(bucket_img ,(80, 50))
+
 dt = 0.05
 t = v = 0
 x = 30 * np.pi / 180    # x는 rad단위
@@ -53,6 +57,24 @@ loopFlag = True
 
 global updatedX, updatedY
 
+loopFlag1 = True
+while loopFlag1:
+    for event in pygame.event.get(): # 이 구문은 무엇일까?? 근데 없으면 안된다! :(
+        if event.type == QUIT:
+            loopFlag1 = False
+
+    srf.fill((255, 255, 255))
+    t = t + dt
+    bucketX = 100
+    if bucketX == 100:
+        dX = 1
+    if bucketX == 900:
+        dX = -1
+
+    bucketX = bucketX + dX
+    bucketY = 900
+    srf.blit(bucket_img, (bucketX, bucketY))
+
 
 
 while loopFlag:
@@ -71,7 +93,7 @@ while loopFlag:
     updatedY = gndConterY + penLength * np.cos(x)
 
     pygame.draw.line(srf, (100, 100, 100), (gndCenterX, gndConterY), (updatedX, updatedY), 2)
-    srf.blit(coin_img_small, (int(updatedX)-15, int(updatedY)-15))
+    srf.blit(coin_img_set, (int(updatedX)-15, int(updatedY)-15))
     pygame.draw.line(srf, (100, 0, 100) ,(int(updatedX), int(updatedY)), (int(updatedX+penLength*v*np.cos(-x)), int(updatedY+penLength*v*np.sin(-x))),2)
     pygame.draw.line(srf, (0, 0, 0), (10, 20), (290, 20), 10)
 
@@ -85,13 +107,6 @@ v_x = penLength * v * np.cos(-x)
 v_y = penLength * v * np.sin(-x)
 neworiginX = updatedX
 neworiginY = updatedY
-
-while loopFlag1:
-    for event in pygame.event.get(): # 이 구문은 무엇일까?? 근데 없으면 안된다! :(
-        if event.type == QUIT:
-            loopFlag1 = False
-
-
 
 while loopFlag:
     for event in pygame.event.get(): # 이 구문은 무엇일까?? 근데 없으면 안된다! :(
@@ -107,7 +122,7 @@ while loopFlag:
 
     updatedX = v_x * t
     updatedY = v_y * t + 0.5 * 700 * t**2
-    srf.blit(coin_img_small, (int(updatedX + neworiginX) - 15, int(updatedY + neworiginY) - 15))
+    srf.blit(coin_img_set, (int(updatedX + neworiginX) - 15, int(updatedY + neworiginY) - 15))
 
 
     pygame.time.delay(40)
