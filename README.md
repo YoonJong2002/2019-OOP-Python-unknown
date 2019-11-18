@@ -61,8 +61,6 @@ vpython
 easy 모드에서의 동전 클래스를 상속하여 medium 모드의 동전클래스를 만들고, medium 모드의 동전 클래스를 상속하여 hard모드의 동전 클래스를 구성한다.
 게임 진행은 처음 사용자 이름을 입력한 후, 이를 이용해 player class를 새로 만든다. 게임 결과 (시간, 도달 단계)를 해당 객체에 저장하고, 마지막에 정렬하여 leaderboard
 
-merge 시행햇었음
-
 <hr>
 
 #### readme 작성관련 참고하기 [바로가기](https://heropy.blog/2017/09/30/markdowkn/)
