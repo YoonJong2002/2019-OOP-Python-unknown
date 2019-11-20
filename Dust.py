@@ -16,7 +16,8 @@ bucket_img = pygame.image.load("bucket.png")
 bucket_img_set = pygame.transform.scale(bucket_img, (bucket_h, bucket_w))
 
 dt = 0.05
-t = v = 0
+t = 0
+v = 0
 x = 30 * np.pi / 180    # x는 rad 단위
 pen_fm = 0.01
 pen_m = 0.1
@@ -70,6 +71,14 @@ def bucket_moves(bucketX, bucket_v, dX):
     return bucketX, bucket_v, dX
 
 
+def keyboard():
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            return 1
+        if event.type == KEYDOWN:
+            return 2
+
+
 bucketX = 0
 bucket_v = 5
 dX = bucket_v
@@ -78,12 +87,8 @@ dX = bucket_v
 def coin_swings():
     global loopFlag, bucketX, bucket_v, dX, t,x,v, updatedX, updatedY
     while loopFlag:
-        for event in pygame.event.get():  # 이 구문은 무엇일까?? 근데 없으면 안된다! :(
-            if event.type == QUIT:
-                loopFlag = False
-            if event.type == KEYDOWN:
-                if event.key == K_RIGHT:
-                    loopFlag = False
+        if keyboard() == 2:
+            loopFlag = False
 
         srf.fill((255, 255, 255))
 
@@ -103,15 +108,12 @@ def coin_swings():
         pygame.time.delay(40)
         pygame.display.flip()
 
+
 def coin_falls():
     global neworiginY, neworiginX, bucketX, bucket_w, bucket_v, updatedX, updatedY, loopFlag, v_x, v_y, t, dX
     while loopFlag:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                loopFlag = False
-            if event.type == KEYDOWN:
-                if event.key == K_RIGHT:
-                    loopFlag = False
+        if keyboard() == 2:
+            loopFlag = False
 
         if neworiginY + updatedY >= srf_h - bucket_h:   # neworiginY + updatedY : 코인 중심의 Y, srf_h - bucket_h : 버킷 윗면의 높이
             if abs((int(updatedX + neworiginX)) - (bucketX + bucket_w/2)) <= bucket_w/2:      # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
@@ -130,12 +132,19 @@ def coin_falls():
         pygame.time.delay(40)
         pygame.display.flip()
 
+game_is_on = True
 
-coin_swings()
-loopFlag = True
-t = 0       # 시간 초기화
-v_x = penLength * v * np.cos(-x)
-v_y = penLength * v * np.sin(-x)
-neworiginX = updatedX
-neworiginY = updatedY
-coin_falls()
+while game_is_on:
+    if keyboard() == 1:
+        game_is_on = False
+
+    x = 30 * np.pi / 180  # x는 rad 단위
+    v = 0
+    coin_swings()
+    loopFlag = True
+    t = 0       # 시간 초기화
+    v_x = penLength * v * np.cos(-x)
+    v_y = penLength * v * np.sin(-x)
+    neworiginX = updatedX
+    neworiginY = updatedY
+    coin_falls()
