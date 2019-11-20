@@ -116,7 +116,7 @@ while loopFlag:
             if event.key == K_RIGHT:
                 loopFlag = False
     if neworiginY + updatedY >= srf_h - bucket_h:   # neworiginY + updatedY : 코인 중심의 Y, srf_h - bucket_h : 버킷 윗면의 높이
-        if abs((int(updatedX + neworiginX)) - (bucketX + bucket_w/2)) <= bucket_w:      # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
+        if abs((int(updatedX + neworiginX)) - (bucketX + bucket_w/2)) <= bucket_w/2:      # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
             print('yay')
         else:
             print('aww')
