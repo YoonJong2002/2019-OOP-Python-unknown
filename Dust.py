@@ -26,7 +26,7 @@ pen_g = 9.8
 gndCenterX = 350
 gndCenterY = 20
 penLength = pen_l * 100 * 2
-
+updatedX = updatedY = 0
 
 def calcODEFunc(tVal, xVal, vVal):
     return -pen_fm / (pen_m * pen_l * pen_l + pen_J) * vVal - pen_m * pen_g * pen_l / (
@@ -55,7 +55,6 @@ def solveODEusingRK4(t, x, v):
 
 pygame.init() #초기화
 loopFlag = True
-global updatedX, updatedY
 
 
 def bucket_moves(bucketX, bucket_v, dX):
@@ -75,62 +74,68 @@ bucketX = 0
 bucket_v = 5
 dX = bucket_v
 
-while loopFlag:
-    for event in pygame.event.get():  # 이 구문은 무엇일까?? 근데 없으면 안된다! :(
-        if event.type == QUIT:
-            loopFlag = False
-        if event.type == KEYDOWN:
-            if event.key == K_RIGHT:
+
+def coin_swings():
+    global loopFlag, bucketX, bucket_v, dX, t,x,v, updatedX, updatedY
+    while loopFlag:
+        for event in pygame.event.get():  # 이 구문은 무엇일까?? 근데 없으면 안된다! :(
+            if event.type == QUIT:
                 loopFlag = False
+            if event.type == KEYDOWN:
+                if event.key == K_RIGHT:
+                    loopFlag = False
 
-    srf.fill((255, 255, 255))
+        srf.fill((255, 255, 255))
 
-    [bucketX, bucket_v, dX] = bucket_moves(bucketX, bucket_v, dX)   # bucket 의 이동.
+        [bucketX, bucket_v, dX] = bucket_moves(bucketX, bucket_v, dX)   # bucket 의 이동.
 
-    t = t + dt
-    [x, v] = solveODEusingRK4(t, x, v)      # x 는 각변위
-    updatedX = gndCenterX + penLength * np.sin(x)
-    updatedY = gndCenterY + penLength * np.cos(x)
+        t = t + dt
+        [x, v] = solveODEusingRK4(t, x, v)      # x 는 각변위
+        updatedX = gndCenterX + penLength * np.sin(x)
+        updatedY = gndCenterY + penLength * np.cos(x)
 
-    pygame.draw.line(srf, (0, 0, 0), (10, 20), (700, 20), 10)   # 줄이 매달린 천장
-    pygame.draw.line(srf, (100, 100, 100), (gndCenterX, gndCenterY), (updatedX, updatedY), 2)   # 줄
-    srf.blit(coin_img_set, (int(updatedX)-15, int(updatedY)-15))    # 동전
-    pygame.draw.line(srf, (100, 0, 100) ,(int(updatedX), int(updatedY)), (int(updatedX+penLength*v*np.cos(-x)), int(updatedY+penLength*v*np.sin(-x))),2)    # 속도 벡터 표시
+        pygame.draw.line(srf, (0, 0, 0), (10, 20), (700, 20), 10)   # 줄이 매달린 천장
+        pygame.draw.line(srf, (100, 100, 100), (gndCenterX, gndCenterY), (updatedX, updatedY), 2)   # 줄
+        srf.blit(coin_img_set, (int(updatedX)-15, int(updatedY)-15))    # 동전
+        pygame.draw.line(srf, (100, 0, 100) ,(int(updatedX), int(updatedY)), (int(updatedX+penLength*v*np.cos(-x)), int(updatedY+penLength*v*np.sin(-x))),2)    # 속도 벡터 표시
 
-    pygame.display.update()     # 동전은 image, update 를 해야 보임
-    pygame.time.delay(40)
-    pygame.display.flip()
+        pygame.display.update()     # 동전은 image, update 를 해야 보임
+        pygame.time.delay(40)
+        pygame.display.flip()
 
+def coin_falls():
+    global neworiginY, neworiginX, bucketX, bucket_w, bucket_v, updatedX, updatedY, loopFlag, v_x, v_y, t, dX
+    while loopFlag:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                loopFlag = False
+            if event.type == KEYDOWN:
+                if event.key == K_RIGHT:
+                    loopFlag = False
+
+        if neworiginY + updatedY >= srf_h - bucket_h:   # neworiginY + updatedY : 코인 중심의 Y, srf_h - bucket_h : 버킷 윗면의 높이
+            if abs((int(updatedX + neworiginX)) - (bucketX + bucket_w/2)) <= bucket_w/2:      # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
+                print('yay')
+            else:
+                print('aww')
+            break
+
+        srf.fill((255, 255, 255))
+        t = t + dt
+        updatedX = v_x * t
+        updatedY = v_y * t + 0.5 * 700 * t**2
+        srf.blit(coin_img_set, (int(updatedX + neworiginX) - 15, int(updatedY + neworiginY) - 15))      # 날라가는 동전
+        [bucketX, bucket_v, dX] = bucket_moves(bucketX, bucket_v, dX)       # bucket
+
+        pygame.time.delay(40)
+        pygame.display.flip()
+
+
+coin_swings()
 loopFlag = True
-t = 0
+t = 0       # 시간 초기화
 v_x = penLength * v * np.cos(-x)
 v_y = penLength * v * np.sin(-x)
 neworiginX = updatedX
 neworiginY = updatedY
-
-while loopFlag:
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            loopFlag = False
-        if event.type == KEYDOWN:
-            if event.key == K_RIGHT:
-                loopFlag = False
-    if neworiginY + updatedY >= srf_h - bucket_h:   # neworiginY + updatedY : 코인 중심의 Y, srf_h - bucket_h : 버킷 윗면의 높이
-        if abs((int(updatedX + neworiginX)) - (bucketX + bucket_w/2)) <= bucket_w/2:      # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
-            print('yay')
-        else:
-            print('aww')
-        break
-
-
-    srf.fill((255, 255, 255))
-
-    t = t + dt
-
-    updatedX = v_x * t
-    updatedY = v_y * t + 0.5 * 700 * t**2
-    srf.blit(coin_img_set, (int(updatedX + neworiginX) - 15, int(updatedY + neworiginY) - 15))      # 날라가는 동전
-    [bucketX, bucket_v, dX] = bucket_moves(bucketX, bucket_v, dX)       # bucket
-
-    pygame.time.delay(40)
-    pygame.display.flip()
+coin_falls()
