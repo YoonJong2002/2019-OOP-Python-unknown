@@ -85,7 +85,7 @@ dX = bucket_v
 
 
 def coin_swings():
-    global loopFlag, bucketX, bucket_v, dX, t,x,v, updatedX, updatedY
+    global loopFlag, bucketX, bucket_v, dX, t, x, v, updatedX, updatedY
     while loopFlag:
         if keyboard() == 2:
             loopFlag = False

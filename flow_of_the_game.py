@@ -11,6 +11,10 @@ while True:
     screen = opening.set_screen()
     player = opening.opening(screen)
 
+    # easy_play()
+    # medium_play()
+    # hard_play()
+
     # list_of_players.append(player)
 
     # if not play_again():
