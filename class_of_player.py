@@ -3,6 +3,7 @@ class Player:
         self.playername = playername
         self.lifeleft = 5
         self.collectedmoney = 0
+        self.timespent = 0
 
     def you_died(self):
         if self.lifeleft == 0:
@@ -10,5 +11,5 @@ class Player:
         else:
             self.lifeleft = self.lifeleft - 1
 
-    def you_collected(self, how_much_collected3):
+    def you_collected(self, how_much_collected):
         self.collectedmoney = self.collectedmoney + how_much_collected
