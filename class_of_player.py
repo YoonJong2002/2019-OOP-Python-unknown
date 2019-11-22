@@ -5,11 +5,12 @@ class Player:
         self.collectedmoney = 0
         self.timespent = 0
 
-    def you_died(self):
+    def did_you_die(self):
         if self.lifeleft == 0:
-            pass
+            return True
         else:
             self.lifeleft = self.lifeleft - 1
+            return False
 
     def you_collected(self, how_much_collected):
         self.collectedmoney = self.collectedmoney + how_much_collected

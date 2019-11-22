@@ -4,6 +4,7 @@
 import pygame
 import class_of_player
 
+
 def set_screen():
     """
         기본적인 화면 설정

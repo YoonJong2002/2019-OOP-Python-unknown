@@ -29,6 +29,7 @@ gndCenterY = 20
 penLength = pen_l * 100 * 2
 updatedX = updatedY = 0
 
+
 def calcODEFunc(tVal, xVal, vVal):
     return -pen_fm / (pen_m * pen_l * pen_l + pen_J) * vVal - pen_m * pen_g * pen_l / (
                 pen_m * pen_l * pen_l + pen_J) * xVal
@@ -54,7 +55,7 @@ def solveODEusingRK4(t, x, v):
     return x + dx, v + dv
 
 
-pygame.init() #초기화
+pygame.init() # 초기화
 loopFlag = True
 
 
@@ -73,9 +74,9 @@ def bucket_moves(bucketX, bucket_v, dX):
 
 def keyboard():
     for event in pygame.event.get():
-        if event.type == QUIT:
+        if event.type == pygame.QUIT:
             return 1
-        if event.type == KEYDOWN:
+        if event.type == pygame.KEYDOWN:
             return 2
 
 
