@@ -3,6 +3,7 @@
 
 import pygame
 import class_of_player
+import class_of_text
 
 
 def set_screen():
@@ -50,19 +51,8 @@ def opening(screen):
     finished = False
     flag_id_input = False
 
-    font_bold_size = 35
-    font_original_size = 20
-    font_bold = pygame.font.Font('a옛날사진관3.ttf', font_bold_size)
-    font_original = pygame.font.Font('a옛날사진관2.ttf', font_original_size)
-
-    text_title_obj = font_bold.render('하늘에서 동전이 떨어진다', True, (0, 0, 0))
-    text_subtitle_obj = font_original.render('PRESS ANY KEY', True, (0, 0, 0))
-
-    text_title = text_title_obj.get_rect()
-    text_subtitle = text_subtitle_obj.get_rect()
-
-    text_title.center = (450, 200)
-    text_subtitle.center = (450, 300)
+    text_title = class_of_text.Text('bold', 35, '하늘에서 동전이 떨어진다', 450, 200)
+    text_subtitle = class_of_text.Text('original', 20, 'PRESS ANY KEY', 450, 300)
 
     (coin_size_img, treasure_size_img) = set_opening_screen_image()
 
@@ -75,10 +65,10 @@ def opening(screen):
 
         screen.fill((255, 255, 255))
         opening_screen_image_show(coin_size_img, treasure_size_img, screen)
-        screen.blit(text_title_obj, text_title)
+        text_title.screen_text_show(screen)
 
         if flag_id_input is False:
-            screen.blit(text_subtitle_obj, text_subtitle)
+            text_subtitle.screen_text_show(screen)
         else:
             player_id = enter_id(screen)
             player = class_of_player.Player(player_id)
@@ -95,21 +85,8 @@ def enter_id(screen):
     """
 
     (coin_size_img, treasure_size_img) = set_opening_screen_image()
-
-    font_bold_size = 35
-    font_original_size = 20
-
-    font_bold = pygame.font.Font('a옛날사진관3.ttf', font_bold_size)
-    font_original = pygame.font.Font('a옛날사진관2.ttf', font_original_size)
-
-    text_title_obj = font_bold.render('하늘에서 동전이 떨어진다', True, (0, 0, 0))
-    text_enter_id_obj = font_original.render('ENTER YOUR ID', True, (0, 0, 0))
-
-    text_title = text_title_obj.get_rect()
-    text_enter_id = text_enter_id_obj.get_rect()
-
-    text_title.center = (450, 200)
-    text_enter_id.center = (450, 260)
+    text_title = class_of_text.Text('bold', 35, '하늘에서 동전이 떨어진다', 450, 200)
+    text_enterid = class_of_text.Text('original', 20, 'ENTER YOUR ID', 450, 260)
 
     string_player_id = ''
 
@@ -127,15 +104,14 @@ def enter_id(screen):
                 else:
                     string_player_id = string_player_id + event.unicode
 
-        text_player_id_obj = font_original.render(string_player_id, True, (0, 0, 0))
-        text_player_id = text_player_id_obj.get_rect()
-        text_player_id.center = (450, 300)
+        text_player_id = class_of_text.Text('original', 20, string_player_id, 450, 300)
 
         screen.fill((255, 255, 255))
         opening_screen_image_show(coin_size_img, treasure_size_img, screen)
-        screen.blit(text_title_obj, text_title)
-        screen.blit(text_enter_id_obj, text_enter_id)
-        screen.blit(text_player_id_obj, text_player_id)
+        text_title.screen_text_show(screen)
+        text_enterid.screen_text_show(screen)
+        text_player_id.screen_text_show(screen)
+
         pygame.display.update()
 
 
@@ -146,9 +122,6 @@ def game_explain(screen, player_name):
         :param player_name: 앞서 입력받은 플레이어의 아이디
         :return: 없음
     """
-    font_original_size = 16
-    font_original = pygame.font.Font('a옛날사진관2.ttf', font_original_size)
-
     explanation = ["'하늘에서 동전이 떨어진다'에 오신 " + player_name + ", 환영합니다!",
                    "게임은 Easy, Medium, Hard의 세 가지 스테이지로 구성됩니다",
                    "동전은 실에 매달려 흔들리고,",
@@ -159,18 +132,14 @@ def game_explain(screen, player_name):
                    "각 스테이지를 통과하시면 하나씩 추가됩니다",
                    "최대한 많은 동전을 획득해보세요!",
                    "그럼, Good Luck!"]
-    text_explain_obj = []
+
     text_explain = []
 
-    (coin_size_img, treasure_size_img) = set_opening_screen_image()
+    text_explain.append(class_of_text.Text('original', 16, explanation[0], 450, 90))
+    for i in range(1, 10):
+        text_explain.append(class_of_text.Text('original', 16, explanation[i], 450, 100 + 35*i))
 
-    for i in range(10):
-        text_explain_obj.append(font_original.render(explanation[i], True, (0, 0, 0)))
-        text_explain.append(text_explain_obj[i].get_rect())
-        if i >= 1:
-            text_explain[i].center = (450, 100 + 35*i)
-        else:
-            text_explain[i].center = (450, 90)
+    (coin_size_img, treasure_size_img) = set_opening_screen_image()
 
     finished = False
     while not finished:
@@ -182,6 +151,7 @@ def game_explain(screen, player_name):
         screen.fill((255, 255, 255))
         opening_screen_image_show(coin_size_img, treasure_size_img, screen)
         for i in range(10):
-            screen.blit(text_explain_obj[i], text_explain[i])
+            text_explain[i].screen_text_show(screen)
 
         pygame.display.update()
+    return

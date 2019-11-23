@@ -9,7 +9,7 @@ list_of_players = []
 pygame.init()
 
 while True:
-    screen = opening.set_screen() # 기본 스크린 생성하여 screen에 저장
+    screen = opening.set_screen()  # 기본 스크린 생성하여 screen에 저장
     player = opening.opening(screen)   # 오프닝 화면 띄우기, 플레이어 아이디 입력, 플레이어 객체 생성
     opening.game_explain(screen, player.player_name)
 

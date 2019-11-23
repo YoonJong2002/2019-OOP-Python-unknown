@@ -1,5 +1,6 @@
 import pygame
 import opening
+import class_of_text
 
 
 def game_over(screen, player, list_of_players):
@@ -19,11 +20,7 @@ def play_again(screen):
         :param screen: 출력에 사용할 스크린
         :return: 더 플레이한다면 True, 플레이하지 않는다면 False를 반환
     """
-    font_original_size = 20
-    font_original = pygame.font.Font('a옛날사진관2.ttf', font_original_size)
-    text_ask_obj = font_original.render('다시 플레이하시겠습니까? (y or n)', True, (0, 0, 0))
-    text_ask = text_ask_obj.get_rect()
-    text_ask.center = (350, 250)
+    text_ask = class_of_text.Text('original', 20, '다시 플레이하시겠습니까? (y or n)', 350, 250)
 
     finished = False
     while not finished:
@@ -34,7 +31,7 @@ def play_again(screen):
                 print(event.unicode.lower().startswith('y'))
                 return event.unicode.lower().startswith('y')
         screen.fill((255, 255, 255))
-        screen.blit(text_ask_obj, text_ask)
+        text_ask.screen_text_show(screen)
         pygame.display.update()
 
 
