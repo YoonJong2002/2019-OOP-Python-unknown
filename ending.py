@@ -20,7 +20,7 @@ def play_again(screen):
         :return: 더 플레이한다면 True, 플레이하지 않는다면 False를 반환
     """
     font_original_size = 20
-    font_original = pygame.font.SysFont('a옛날사진관2', font_original_size)
+    font_original = pygame.font.Font('a옛날사진관2.ttf', font_original_size)
     text_ask_obj = font_original.render('다시 플레이하시겠습니까? (y or n)', True, (0, 0, 0))
     text_ask = text_ask_obj.get_rect()
     text_ask.center = (350, 250)

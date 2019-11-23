@@ -52,8 +52,8 @@ def opening(screen):
 
     font_bold_size = 35
     font_original_size = 20
-    font_bold = pygame.font.SysFont('a옛날사진관3', font_bold_size)
-    font_original = pygame.font.SysFont('a옛날사진관2', font_original_size)
+    font_bold = pygame.font.Font('a옛날사진관3.ttf', font_bold_size)
+    font_original = pygame.font.Font('a옛날사진관2.ttf', font_original_size)
 
     text_title_obj = font_bold.render('하늘에서 동전이 떨어진다', True, (0, 0, 0))
     text_subtitle_obj = font_original.render('PRESS ANY KEY', True, (0, 0, 0))
@@ -99,8 +99,8 @@ def enter_id(screen):
     font_bold_size = 35
     font_original_size = 20
 
-    font_bold = pygame.font.SysFont('a옛날사진관3', font_bold_size)
-    font_original = pygame.font.SysFont('a옛날사진관2', font_original_size)
+    font_bold = pygame.font.Font('a옛날사진관3.ttf', font_bold_size)
+    font_original = pygame.font.Font('a옛날사진관2.ttf', font_original_size)
 
     text_title_obj = font_bold.render('하늘에서 동전이 떨어진다', True, (0, 0, 0))
     text_enter_id_obj = font_original.render('ENTER YOUR ID', True, (0, 0, 0))
@@ -147,7 +147,7 @@ def game_explain(screen, player_name):
         :return: 없음
     """
     font_original_size = 16
-    font_original = pygame.font.SysFont('a옛날사진관2', font_original_size)
+    font_original = pygame.font.Font('a옛날사진관2.ttf', font_original_size)
 
     explanation = ["'하늘에서 동전이 떨어진다'에 오신 " + player_name + ", 환영합니다!",
                    "게임은 Easy, Medium, Hard의 세 가지 스테이지로 구성됩니다",
