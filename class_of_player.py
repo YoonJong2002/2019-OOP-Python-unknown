@@ -9,7 +9,6 @@ class Player:
         if self.life_left == 0:
             return True
         else:
-            self.life_left = self.life_left - 1
             return False
 
     def you_collected(self, how_much_collected):

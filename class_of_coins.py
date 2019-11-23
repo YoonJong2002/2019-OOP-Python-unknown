@@ -61,6 +61,7 @@ def solveODEusingRK4(t, x, v):
 
     return x + dx, v + dv
 
+
 def bucket_moves(bucketX, bucket_v, dX,srf):
     if bucketX <= 50:
         dX = bucket_v
@@ -73,12 +74,17 @@ def bucket_moves(bucketX, bucket_v, dX,srf):
     pygame.display.update()
     return bucketX, bucket_v, dX
 
+
 def bucket_init():
     global  bucketX, bucket_v, dX
     bucketX = 100
     bucket_v = 1
     dX = bucket_v
 
+def coin_init():
+    global x, v
+    x = 30 * np.pi / 180  # 진자 운동의 x, v 초기화
+    v = 0
 
 class BasicCoin:
     def __init__(self, screen, cost, level):
@@ -89,6 +95,7 @@ class BasicCoin:
     def coin_swings(self, srf):
         global loopFlag, bucketX, bucket_v, dX, t, x, v, updatedX, updatedY
         loopFlag = True
+        coin_init()
         bucket_init()
         while loopFlag:
             if keyboard() == 2:
@@ -113,7 +120,7 @@ class BasicCoin:
             pygame.time.delay(40)
             pygame.display.flip()
 
-    def coin_falls(self,srf):
+    def coin_falls(self, srf):
         global neworiginY, neworiginX, bucketX, bucket_w, bucket_v, updatedX, updatedY, loopFlag, v_x, v_y, t, dX
         t = 0  # 시간 초기화
         v_x = penLength * v * np.cos(-x)
@@ -129,8 +136,10 @@ class BasicCoin:
             if neworiginY + updatedY >= srf_h - bucket_h:  # neworiginY + updatedY : 코인 중심의 Y, srf_h - bucket_h : 버킷 윗면의 높이
                 if abs((int(updatedX + neworiginX)) - (bucketX + bucket_w / 2)) <= bucket_w / 2:  # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
                     print('yay')
+                    return True
                 else:
                     print('aww')
+                    return False
                 break
 
             srf.fill((255, 255, 255))
