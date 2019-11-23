@@ -11,7 +11,6 @@ class Text:
 
 class BoldText(Text):
     boldfont = pygame.font.SysFont('a옛날사진관3', font_bold_size)
-    # hihi
 
 class OriginalText(Text):
     pass
