@@ -11,7 +11,7 @@ def basic_playing_flow(screen, player, coin, v_x, v_y, x, y):
         :return: 게임이 종료되면 True 반환, 종료되지 않으면 False 반환
     """
 
-    final_x, final_y = coin.coin_fall(screen) # coin_fall 에 매개변수 추가하고 여기도 추가 필요!!
+    final_x, final_y = coin.coin_fall(screen)    # coin_fall 에 매개변수 추가하고 여기도 추가 필요!!
 
     if coin.did_coin_enter(final_x, final_y) is True:
         player.you_collected(coin.cost)

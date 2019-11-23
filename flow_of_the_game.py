@@ -1,11 +1,20 @@
+import pygame
 import opening
 import playing
 
 list_of_players = []
 
+def keyboard():
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            return 1
+        if event.type == pygame.KEYDOWN:
+            return 2
+
 while True:
     screen = opening.set_screen()
     player = opening.opening(screen)
+    player.basic_playing_flow()
 
     """
     is_game_over = False

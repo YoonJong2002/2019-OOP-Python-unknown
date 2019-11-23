@@ -1,16 +1,16 @@
 class Player:
-    def __init__(self, playername):
-        self.playername = playername
-        self.lifeleft = 5
-        self.collectedmoney = 0
-        self.timespent = 0
+    def __init__(self, player_name):
+        self.player_name = player_name
+        self.life_left = 5
+        self.collected_money = 0
+        self.time_spent = 0
 
     def did_you_die(self):
-        if self.lifeleft == 0:
+        if self.life_left == 0:
             return True
         else:
-            self.lifeleft = self.lifeleft - 1
+            self.life_left = self.life_left - 1
             return False
 
     def you_collected(self, how_much_collected):
-        self.collectedmoney = self.collectedmoney + how_much_collected
+        self.collected_money = self.collected_money + how_much_collected
