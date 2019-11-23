@@ -3,11 +3,22 @@ import opening
 import class_of_text
 
 
-def game_over(screen, player, list_of_players):
+def insert_player_in_list(player, list_of_players):
     """
-        게임이 종료되었을 때, list_of_players 의 적절한 위치에 플레이어를 삽입하고 랭킹을 화면에 표시함
-        :param screen: 출력에 사용할 스크린
+        게임이 종료되었을 때, list_of_players 의 적절한 위치에 플레이어를 삽입함
         :param player: 이번에 플레이한 플레이어 객체
+        :param list_of_players: 이때까지 플레이한 플레이어 객체들의 리스트
+        :return: player 을 삽입한 상태의 list_of_players
+    """
+    list_of_players.append(player)
+    list_of_players = sorted(list_of_players, key=lambda x: (x.collected_money, x.life_left, -x.time_spent))
+    return list_of_players
+
+
+def show_ranking(screen, list_of_players):
+    """
+        정렬된 list of players 를 화면에 보여줌
+        :param screen: 출력에 사용할 스크린
         :param list_of_players: 이때까지 플레이한 플레이어 객체들의 리스트
         :return: 없음
     """

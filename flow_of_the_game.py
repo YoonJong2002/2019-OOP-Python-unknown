@@ -23,6 +23,7 @@ while True:
     end_time = time.time()
     player.time_spent = end_time - start_time
 
-    ending.game_over(screen, player, list_of_players)
+    list_of_players = ending.insert_player_in_list(player, list_of_players)
+    ending.show_ranking(screen, list_of_players)
     if not ending.play_again(screen):
         break
