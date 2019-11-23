@@ -4,7 +4,6 @@ import numpy as np
 srf_h = 700
 srf_w = 500
 
-
 coin_size = 30
 coin_img = pygame.image.load("coin.png")
 coin_img_set = pygame.transform.scale(coin_img, (coin_size, coin_size))
@@ -81,10 +80,12 @@ def bucket_init():
     bucket_v = 1
     dX = bucket_v
 
+
 def coin_init():
     global x, v
     x = 30 * np.pi / 180  # 진자 운동의 x, v 초기화
     v = 0
+
 
 class BasicCoin:
     def __init__(self, screen, cost, level):
@@ -151,15 +152,13 @@ class BasicCoin:
             pygame.time.delay(40)
             pygame.display.flip()
 
-
     def did_coin_enter(self):
         """
             coin_fall 메서드에서 받은 매개변수를 이용하여 동전을 획득했는지 판단
             :param ?????????: 동전 획득 여부를 판단하니 위한 매개변수
             :return: 동전을 획득한 경우 True, 획득하지 못한 경우 False를 반환
         """
-        if abs((int(updatedX + neworiginX)) - (
-                bucketX + bucket_w / 2)) <= bucket_w / 2:  # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
+        if abs((int(updatedX + neworiginX)) - (bucketX + bucket_w / 2)) <= bucket_w / 2:  # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
             print('yay')
         else:
             print('aww')

@@ -134,3 +134,50 @@ def enter_id(screen):
         screen.blit(text_enter_id_obj, text_enter_id)
         screen.blit(text_player_id_obj, text_player_id)
         pygame.display.update()
+
+
+def game_explain(screen, player_name):
+    """
+        게임에 대한 설명을 스크린에 표시함
+        :param screen: 출력에 사용할 스크린
+        :param player_name: 앞서 입력받은 플레이어의 아이디
+        :return: 없음
+    """
+    font_original_size = 16
+    font_original = pygame.font.SysFont('a옛날사진관2', font_original_size)
+
+    explanation = ["'하늘에서 동전이 떨어진다'에 오신 " + player_name + ", 환영합니다!",
+                   "게임은 Easy, Medium, Hard의 세 가지 스테이지로 구성됩니다",
+                   "동전은 실에 매달려 흔들리고,",
+                   "Enter 키를 누르시면 줄이 끊겨 동전이 떨어집니다",
+                   "아래쪽에 있는 양동이에 동전을 모으시면 성공입니다",
+                   "실패하실 경우, 생명이 한 개씩 줄어듭니다",
+                   "생명은 처음에 5개가 주어지고, ",
+                   "각 스테이지를 통과하시면 하나씩 추가됩니다",
+                   "최대한 많은 동전을 획득해보세요!",
+                   "그럼, Good Luck!"]
+    text_explain_obj = []
+    text_explain = []
+
+    for i in range(10):
+        text_explain_obj.append(font_original.render(explanation[i], True, (0, 0, 0)))
+        text_explain.append(text_explain_obj[i].get_rect())
+        if i >= 1:
+            text_explain[i].center = (450, 100 + 35*i)
+        else:
+            text_explain[i].center = (450, 90)
+
+    finished = False
+    while not finished:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                finished = True
+        (coin_size_img, treasure_size_img) = set_image()
+        screen.fill((255, 255, 255))
+        screen.blit(coin_size_img, (70, 80))
+        screen.blit(coin_size_img, (120, 120))
+        screen.blit(treasure_size_img, (60, 200))
+        for i in range(10):
+            screen.blit(text_explain_obj[i], text_explain[i])
+
+        pygame.display.update()

@@ -41,6 +41,7 @@ def easy_play(screen, player):
         print(player.life_left, player.collected_money)
     return True     # 5번 전부 던진 경우
 
+
 def medium_play(screen, player):
     """
         medium 모드에서의 게임 플레이를 진행하는 함수
@@ -50,7 +51,7 @@ def medium_play(screen, player):
     """
     medium_coin_cost = 100
     for i in range(5):
-        coin = class_of_coins.EasyCoin(medium_coin_cost)
+        coin = class_of_coins.MediumCoin(medium_coin_cost)
         v_x, v_y, x, y = coin.coin_swing(screen, coin.stringlength)
         if basic_playing_flow(screen, player, coin, v_x, v_y, x, y) is True:
             return True
@@ -66,7 +67,7 @@ def hard_play(screen, player):
     """
     hard_coin_cost = 500
     for i in range(5):
-        coin = class_of_coins.EasyCoin(hard_coin_cost)
+        coin = class_of_coins.HardCoin(hard_coin_cost)
         v_x, v_y, x, y = coin.coin_swing(screen, coin.stringlength)
         if basic_playing_flow(screen, player, coin, v_x, v_y, x, y) is True:
             return True
