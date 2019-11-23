@@ -3,7 +3,7 @@ import numpy as np
 
 srf_h = 700
 srf_w = 500
-srf = pygame.display.set_mode((srf_h, srf_w))
+
 
 coin_size = 30
 coin_img = pygame.image.load("coin.png")
@@ -61,26 +61,41 @@ def solveODEusingRK4(t, x, v):
 
     return x + dx, v + dv
 
+def bucket_moves(bucketX, bucket_v, dX,srf):
+    if bucketX <= 50:
+        dX = bucket_v
+    if bucketX >= 600:
+        dX = -bucket_v
+
+    bucketX = bucketX + dX
+    bucketY = 450
+    srf.blit(bucket_img_set, (bucketX, bucketY))
+    pygame.display.update()
+    return bucketX, bucket_v, dX
+
+def bucket_init():
+    global  bucketX, bucket_v, dX
+    bucketX = 100
+    bucket_v = 1
+    dX = bucket_v
+
 
 class BasicCoin:
-    def __init__(self, cost, level):
+    def __init__(self, screen, cost, level):
         self.cost = cost
         self.level = level
+        self.screen = screen
 
-    def coin_swing(self, screen, stringlength):
-        """
-            실이 잘리기 전 동전의 진자운동을 구현
-            :param screen: 출력에 사용할 스크린
-            :return: 없음(?????) 혹은 동전의 다음 x좌표, y좌표????
-        """
+    def coin_swings(self, srf):
         global loopFlag, bucketX, bucket_v, dX, t, x, v, updatedX, updatedY
+        loopFlag = True
+        bucket_init()
         while loopFlag:
             if keyboard() == 2:
                 loopFlag = False
 
             srf.fill((255, 255, 255))
-
-            [bucketX, bucket_v, dX] = bucket_moves(bucketX, bucket_v, dX)  # bucket 의 이동.
+            [bucketX, bucket_v, dX] = bucket_moves(bucketX, bucket_v, dX, srf)  # bucket 의 이동.
 
             t = t + dt
             [x, v] = solveODEusingRK4(t, x, v)  # x 는 각변위
@@ -98,21 +113,21 @@ class BasicCoin:
             pygame.time.delay(40)
             pygame.display.flip()
 
-
-    def coin_fall(self, screen):
-        """
-            실이 잘린 후 동전의 포물선 운동을 구현
-            :param screen: 출력에 사용할 스크린 # 필요에 따라 매개변수 추가 부탁!!!!
-            :return: bucket과의 교점의 x좌표, y좌표(?????????) -> 충돌했는지 판단은 did_coin_enter
-        """
+    def coin_falls(self,srf):
         global neworiginY, neworiginX, bucketX, bucket_w, bucket_v, updatedX, updatedY, loopFlag, v_x, v_y, t, dX
+        t = 0  # 시간 초기화
+        v_x = penLength * v * np.cos(-x)
+        v_y = penLength * v * np.sin(-x)
+        neworiginX = updatedX
+        neworiginY = updatedY
+        loopFlag = True
+
         while loopFlag:
             if keyboard() == 2:
                 loopFlag = False
 
             if neworiginY + updatedY >= srf_h - bucket_h:  # neworiginY + updatedY : 코인 중심의 Y, srf_h - bucket_h : 버킷 윗면의 높이
-                if abs((int(updatedX + neworiginX)) - (
-                        bucketX + bucket_w / 2)) <= bucket_w / 2:  # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
+                if abs((int(updatedX + neworiginX)) - (bucketX + bucket_w / 2)) <= bucket_w / 2:  # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
                     print('yay')
                 else:
                     print('aww')
@@ -123,8 +138,7 @@ class BasicCoin:
             updatedX = v_x * t
             updatedY = v_y * t + 0.5 * 700 * t ** 2
             srf.blit(coin_img_set, (int(updatedX + neworiginX) - 15, int(updatedY + neworiginY) - 15))  # 날라가는 동전
-            [bucketX, bucket_v, dX] = bucket_moves(bucketX, bucket_v, dX)  # bucket
-
+            [bucketX, bucket_v, dX] = bucket_moves(bucketX, bucket_v, dX, srf)  # bucket
             pygame.time.delay(40)
             pygame.display.flip()
 
@@ -143,8 +157,9 @@ class BasicCoin:
 
 
 class EasyCoin(BasicCoin):
-    def __init__(self, cost):
+    def __init__(self, cost, screen):
         self.cost = cost
+        self.screen = screen
         self.stringlength = 10  # 코드 돌려보면서 적절히 쉬운 길이로 조절 부탁!
         # self.image = # 이미지 파일 삽입하는 방법 등..?
 

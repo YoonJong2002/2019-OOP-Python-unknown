@@ -1,6 +1,7 @@
 import pygame
 import opening
-import playing
+import class_of_coins
+import Dust
 
 list_of_players = []
 
@@ -11,10 +12,18 @@ def keyboard():
         if event.type == pygame.KEYDOWN:
             return 2
 
-while True:
+MainLoop = True
+while MainLoop:
+    if keyboard() == 1:
+        MainLoop = False
     screen = opening.set_screen()
-    player = opening.opening(screen)
-    player.basic_playing_flow()
+    player = opening.opening(screen) # 여기서 하는게 뭐야??
+    coin1 = class_of_coins.EasyCoin(100, screen) # Easy mode 의 100원 짜리 동전 생성
+    coin1.coin_swings(screen)
+    coin1.coin_falls(screen)
+
+
+
 
     """
     is_game_over = False

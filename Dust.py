@@ -30,12 +30,12 @@ penLength = pen_l * 100 * 2
 updatedX = updatedY = 0
 
 
-def calcODEFunc(tVal, xVal, vVal):
+def calcODEFunc(tVal, xVal, vVal):  # 이부분을 참조했어요!
     return -pen_fm / (pen_m * pen_l * pen_l + pen_J) * vVal - pen_m * pen_g * pen_l / (
                 pen_m * pen_l * pen_l + pen_J) * xVal
 
 
-# Runge Kutta 미방 함수 구현하기
+# Runge Kutta 미분방정식 함수 구현하기 : 이부분을 참조했어요!
 def solveODEusingRK4(t, x, v):
     kx1 = v
     kv1 = calcODEFunc(t, x, v)
@@ -79,7 +79,7 @@ def keyboard():
         if event.type == pygame.KEYDOWN:
             return 2
 
-
+# bucket 의 위치 초기화
 bucketX = 0
 bucket_v = 5
 dX = bucket_v
@@ -112,6 +112,13 @@ def coin_swings():
 
 def coin_falls():
     global neworiginY, neworiginX, bucketX, bucket_w, bucket_v, updatedX, updatedY, loopFlag, v_x, v_y, t, dX
+    t = 0       # 시간 초기화
+    v_x = penLength * v * np.cos(-x)
+    v_y = penLength * v * np.sin(-x)
+    neworiginX = updatedX
+    neworiginY = updatedY
+    loopFlag = True
+
     while loopFlag:
         if keyboard() == 2:
             loopFlag = False
@@ -133,19 +140,7 @@ def coin_falls():
         pygame.time.delay(40)
         pygame.display.flip()
 
+
+x = 30 * np.pi / 180  # 진자 운동의 x, v 초기화
+v = 0
 game_is_on = True
-
-while game_is_on:
-    if keyboard() == 1:
-        game_is_on = False
-
-    x = 30 * np.pi / 180  # x는 rad 단위
-    v = 0
-    coin_swings()
-    loopFlag = True
-    t = 0       # 시간 초기화
-    v_x = penLength * v * np.cos(-x)
-    v_y = penLength * v * np.sin(-x)
-    neworiginX = updatedX
-    neworiginY = updatedY
-    coin_falls()
