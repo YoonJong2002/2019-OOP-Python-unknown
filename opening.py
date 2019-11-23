@@ -18,7 +18,7 @@ def set_screen():
     return screen
 
 
-def set_image():
+def set_opening_screen_image():
     """
         기본 화면의 이미지 크기 및 위치 설정
         :param : 없음
@@ -33,6 +33,12 @@ def set_image():
     coin_size_img = pygame.transform.scale(coin_img, (coin_img_x, coin_img_y))
     treasure_size_img = pygame.transform.scale(treasure_img, (treasure_img_x, treasure_img_y))
     return coin_size_img, treasure_size_img
+
+
+def opening_screen_image_show(coin_size_img, treasure_size_img, screen):
+    screen.blit(coin_size_img, (70, 80))
+    screen.blit(coin_size_img, (120, 120))
+    screen.blit(treasure_size_img, (60, 200))
 
 
 def opening(screen):
@@ -58,6 +64,8 @@ def opening(screen):
     text_title.center = (450, 200)
     text_subtitle.center = (450, 300)
 
+    (coin_size_img, treasure_size_img) = set_opening_screen_image()
+
     while not finished:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -65,12 +73,8 @@ def opening(screen):
             if event.type == pygame.KEYDOWN:
                 flag_id_input = True
 
-        (coin_size_img, treasure_size_img) = set_image()
-
         screen.fill((255, 255, 255))
-        screen.blit(coin_size_img, (70, 80))
-        screen.blit(coin_size_img, (120, 120))
-        screen.blit(treasure_size_img, (60, 200))
+        opening_screen_image_show(coin_size_img, treasure_size_img, screen)
         screen.blit(text_title_obj, text_title)
 
         if flag_id_input is False:
@@ -89,7 +93,9 @@ def enter_id(screen):
         :param screen: 출력에 사용할 스크린
         :return: 입력받은 플레이어 아이디(문자열)
     """
-    # 사용자의 아이디를 입력받음
+
+    (coin_size_img, treasure_size_img) = set_opening_screen_image()
+
     font_bold_size = 35
     font_original_size = 20
 
@@ -121,15 +127,12 @@ def enter_id(screen):
                 else:
                     string_player_id = string_player_id + event.unicode
 
-        (coin_size_img, treasure_size_img) = set_image()
         text_player_id_obj = font_original.render(string_player_id, True, (0, 0, 0))
         text_player_id = text_player_id_obj.get_rect()
         text_player_id.center = (450, 300)
 
         screen.fill((255, 255, 255))
-        screen.blit(coin_size_img, (70, 80))
-        screen.blit(coin_size_img, (120, 120))
-        screen.blit(treasure_size_img, (60, 200))
+        opening_screen_image_show(coin_size_img, treasure_size_img, screen)
         screen.blit(text_title_obj, text_title)
         screen.blit(text_enter_id_obj, text_enter_id)
         screen.blit(text_player_id_obj, text_player_id)
@@ -159,6 +162,8 @@ def game_explain(screen, player_name):
     text_explain_obj = []
     text_explain = []
 
+    (coin_size_img, treasure_size_img) = set_opening_screen_image()
+
     for i in range(10):
         text_explain_obj.append(font_original.render(explanation[i], True, (0, 0, 0)))
         text_explain.append(text_explain_obj[i].get_rect())
@@ -172,11 +177,10 @@ def game_explain(screen, player_name):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
-        (coin_size_img, treasure_size_img) = set_image()
+            if event.type == pygame.KEYDOWN:
+                return
         screen.fill((255, 255, 255))
-        screen.blit(coin_size_img, (70, 80))
-        screen.blit(coin_size_img, (120, 120))
-        screen.blit(treasure_size_img, (60, 200))
+        opening_screen_image_show(coin_size_img, treasure_size_img, screen)
         for i in range(10):
             screen.blit(text_explain_obj[i], text_explain[i])
 

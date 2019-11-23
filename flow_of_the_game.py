@@ -9,8 +9,8 @@ list_of_players = []
 pygame.init()
 
 while True:
-    screen = opening.set_screen()
-    player = opening.opening(screen)   # 여기서 하는게 뭐야?? 오프닝 화면 띄우고, 사용자 아이디 입력받아서 객체로 저장!
+    screen = opening.set_screen() # 기본 스크린 생성하여 screen에 저장
+    player = opening.opening(screen)   # 오프닝 화면 띄우기, 플레이어 아이디 입력, 플레이어 객체 생성
     opening.game_explain(screen, player.player_name)
 
     start_time = time.time()
@@ -20,6 +20,8 @@ while True:
         is_game_over = playing.medium_play(screen, player)
     if is_game_over is False:
         is_game_over = playing.hard_play(screen, player)
+    end_time = time.time()
+    player.time_spent = end_time - start_time
 
     ending.game_over(screen, player, list_of_players)
     if not ending.play_again(screen):
