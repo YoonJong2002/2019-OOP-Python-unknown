@@ -147,6 +147,7 @@ def game_explain(screen, player_name):
         :return: 없음
     """
     font_original_size = 16
+    #######
     font_original = pygame.font.Font('a옛날사진관2.ttf', font_original_size)
 
     explanation = ["'하늘에서 동전이 떨어진다'에 오신 " + player_name + ", 환영합니다!",
