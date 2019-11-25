@@ -45,7 +45,6 @@ def play_again(screen):
             if event.type == pygame.QUIT:
                 finished = True
             if event.type == pygame.KEYDOWN:
-                print(event.unicode.lower().startswith('y'))
                 return event.unicode.lower().startswith('y')
         screen.fill((255, 255, 255))
         text_ask.screen_text_show(screen)

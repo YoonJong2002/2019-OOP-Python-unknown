@@ -120,14 +120,12 @@ class BasicCoin:
         srf.blit(coin_img_set, (int(updatedX) - 15, int(updatedY) - 15))  # 동전
         pygame.draw.line(srf, (100, 0, 100), (int(updatedX), int(updatedY)),(int(updatedX + penLength * v * np.cos(-x)), int(updatedY + penLength * v * np.sin(-x))),2)  # 속도 벡터 표시
         pygame.display.update()  # 동전은 image, update 를 해야 보임
-    return
-"""
+
+    """
     def coin_falls(self, srf):
         매 순간 코인의 좌표(x, y)를 받고 dt 이후의 x,y를 반환
         :param srf:
         :return:
-        """
-        """
         global neworiginY, neworiginX, bucketX, bucket_w, bucket_v, updatedX, updatedY, loopFlag, v_x, v_y, t, dX
         t = 0  # 시간 초기화
         v_x = penLength * v * np.cos(-x)  # 줄을 끊은 순간에 동전의 속도
