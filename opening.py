@@ -3,7 +3,7 @@
 
 import pygame
 import class_of_player
-import class_of_text
+import class_of_text_and_image
 
 
 def set_screen():
@@ -51,8 +51,8 @@ def opening(screen):
     finished = False
     flag_id_input = False
 
-    text_title = class_of_text.Text('bold', 35, '하늘에서 동전이 떨어진다', 450, 200)
-    text_subtitle = class_of_text.Text('original', 20, 'PRESS ANY KEY', 450, 300)
+    text_title = class_of_text_and_image.Text('bold', 35, '하늘에서 동전이 떨어진다', 450, 200)
+    text_subtitle = class_of_text_and_image.Text('original', 20, 'PRESS ANY KEY', 450, 300)
 
     (coin_size_img, treasure_size_img) = set_opening_screen_image()
 
@@ -85,8 +85,8 @@ def enter_id(screen):
     """
 
     (coin_size_img, treasure_size_img) = set_opening_screen_image()
-    text_title = class_of_text.Text('bold', 35, '하늘에서 동전이 떨어진다', 450, 200)
-    text_enterid = class_of_text.Text('original', 20, 'ENTER YOUR ID', 450, 260)
+    text_title = class_of_text_and_image.Text('bold', 35, '하늘에서 동전이 떨어진다', 450, 200)
+    text_enterid = class_of_text_and_image.Text('original', 20, 'ENTER YOUR ID', 450, 260)
 
     string_player_id = ''
 
@@ -104,7 +104,7 @@ def enter_id(screen):
                 else:
                     string_player_id = string_player_id + event.unicode
 
-        text_player_id = class_of_text.Text('original', 20, string_player_id, 450, 300)
+        text_player_id = class_of_text_and_image.Text('original', 20, string_player_id, 450, 300)
 
         screen.fill((255, 255, 255))
         opening_screen_image_show(coin_size_img, treasure_size_img, screen)
@@ -135,9 +135,9 @@ def game_explain(screen, player_name):
 
     text_explain = []
 
-    text_explain.append(class_of_text.Text('original', 16, explanation[0], 450, 90))
+    text_explain.append(class_of_text_and_image.Text('original', 16, explanation[0], 450, 90))
     for i in range(1, 10):
-        text_explain.append(class_of_text.Text('original', 16, explanation[i], 450, 100 + 35*i))
+        text_explain.append(class_of_text_and_image.Text('original', 16, explanation[i], 450, 100 + 35 * i))
 
     (coin_size_img, treasure_size_img) = set_opening_screen_image()
 

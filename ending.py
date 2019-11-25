@@ -1,6 +1,6 @@
 import pygame
 import opening
-import class_of_text
+import class_of_text_and_image
 
 
 def insert_player_in_list(player, list_of_players):
@@ -31,7 +31,7 @@ def play_again(screen):
         :param screen: 출력에 사용할 스크린
         :return: 더 플레이한다면 True, 플레이하지 않는다면 False를 반환
     """
-    text_ask = class_of_text.Text('original', 20, '다시 플레이하시겠습니까? (y or n)', 350, 250)
+    text_ask = class_of_text_and_image.Text('original', 20, '다시 플레이하시겠습니까? (y or n)', 350, 250)
 
     finished = False
     while not finished:

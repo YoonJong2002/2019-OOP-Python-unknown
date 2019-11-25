@@ -64,7 +64,7 @@ def easy_play(screen, player):
     easy_coin_cost = 50
     for i in range(5):
         coin = class_of_coins.EasyCoin(easy_coin_cost)
-        # bucket = class_of_buckets.EasyBucket()
+        # bucket = class_of_buckets.EasyBucket() 이거 대신 bucket 위치 지정 함수로
         if basic_playing_flow(screen, player, coin) is True:  # 파라미터에 나중에 bucket 추가할 것
             return True
     return False
@@ -80,7 +80,7 @@ def medium_play(screen, player):
     medium_coin_cost = 100
     for i in range(5):
         coin = class_of_coins.MediumCoin(medium_coin_cost)
-        # bucket = class_of_buckets.MediumBucket()
+        # bucket = class_of_buckets.MediumBucket() 이거 대신 bucket 위치 지정 함수로
         if basic_playing_flow(screen, player, coin) is True: # 파라미터에 나중에 bucket 추가할 것
             return True
     return False
@@ -96,7 +96,7 @@ def hard_play(screen, player):
     medium_coin_cost = 500
     for i in range(5):
         coin = class_of_coins.HardCoin(hard_coin_cost)
-        # bucket = class_of_buckets.HardBucket()
+        # bucket = class_of_buckets.HardBucket() 이거 대신 bucket 위치 지정 함수로
         if basic_playing_flow(screen, player, coin) is True:  # 파라미터에 나중에 bucket 추가할 것
             return True
     return False
