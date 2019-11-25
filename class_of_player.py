@@ -5,6 +5,7 @@ class Player:
         self.collected_money = 0
         self.time_spent = 0
 
+
     def did_you_die(self):
         if self.life_left == 0:
             return True
@@ -13,3 +14,7 @@ class Player:
 
     def you_collected(self, how_much_collected):
         self.collected_money = self.collected_money + how_much_collected
+
+    def life_left_update(self):
+        self.life_left -= 1
+

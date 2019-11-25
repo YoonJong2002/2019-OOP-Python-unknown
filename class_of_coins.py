@@ -1,5 +1,6 @@
 import pygame
 import numpy as np
+import random
 
 srf_h = 700
 srf_w = 500
@@ -74,9 +75,17 @@ def bucket_moves(bucketX, bucket_v, dX,srf):
     return bucketX, bucket_v, dX
 
 
+def bucket_random(srf):
+    global  bucketX, bucketY
+    bucketX = random.randrange(50, 650)
+    bucketY = 450
+    srf.blit(bucket_img_set, (bucketX, bucketY))
+    pygame.display.update()
+
+
 def bucket_init():
     global  bucketX, bucket_v, dX
-    bucketX = 100
+    bucketX = random.randrange(50, 650)
     bucket_v = 1
     dX = bucket_v
 
@@ -124,9 +133,9 @@ class BasicCoin:
     def coin_falls(self, srf):
         global neworiginY, neworiginX, bucketX, bucket_w, bucket_v, updatedX, updatedY, loopFlag, v_x, v_y, t, dX
         t = 0  # 시간 초기화
-        v_x = penLength * v * np.cos(-x)
+        v_x = penLength * v * np.cos(-x)  # 줄을 끊은 순간에 동전의 속도
         v_y = penLength * v * np.sin(-x)
-        neworiginX = updatedX
+        neworiginX = updatedX  # 줄을 끊긴 곳에서 동전의 포물선 운동 시작
         neworiginY = updatedY
         loopFlag = True
 
@@ -135,12 +144,7 @@ class BasicCoin:
                 loopFlag = False
 
             if neworiginY + updatedY >= srf_h - bucket_h:  # neworiginY + updatedY : 코인 중심의 Y, srf_h - bucket_h : 버킷 윗면의 높이
-                if abs((int(updatedX + neworiginX)) - (bucketX + bucket_w / 2)) <= bucket_w / 2:  # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
-                    print('yay')
-                    return True
-                else:
-                    print('aww')
-                    return False
+                self.did_coin_enter()
                 break
 
             srf.fill((255, 255, 255))
@@ -158,10 +162,13 @@ class BasicCoin:
             :param ?????????: 동전 획득 여부를 판단하니 위한 매개변수
             :return: 동전을 획득한 경우 True, 획득하지 못한 경우 False를 반환
         """
-        if abs((int(updatedX + neworiginX)) - (bucketX + bucket_w / 2)) <= bucket_w / 2:  # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
+        if abs((int(updatedX + neworiginX)) - (
+                bucketX + bucket_w / 2)) <= bucket_w / 2:  # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
             print('yay')
+            return True
         else:
             print('aww')
+            return False
 
 
 class EasyCoin(BasicCoin):

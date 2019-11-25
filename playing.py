@@ -30,7 +30,7 @@ def easy_play(screen, player):
     easy_coin_cost = 50
     for i in range(5):
         if player.did_you_die():
-            return False    # 5개 던지기 전에 죽은 경우
+            return True    # 5개 던지기 전에 죽은 경우. return 은 'game over = easy_play(~~~)  : 'True'
         coin1 = class_of_coins.EasyCoin(easy_coin_cost, screen)
         coin1.coin_swings(screen)
         if coin1.coin_falls(screen):
@@ -39,7 +39,7 @@ def easy_play(screen, player):
             player.life_left -= 1
 
         print(player.life_left, player.collected_money)
-    return True     # 5번 전부 던진 경우
+    return False     # 5번 전부 던진 경우
 
 
 def medium_play(screen, player):
