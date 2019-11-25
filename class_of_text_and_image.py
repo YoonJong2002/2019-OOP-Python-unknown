@@ -20,3 +20,7 @@ class Text:
 
     def screen_text_show(self, screen):
         screen.blit(self.obj, self.text)
+
+
+class Image:
+    def __init__(self, what_image, ):
