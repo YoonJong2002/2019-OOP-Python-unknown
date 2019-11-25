@@ -19,29 +19,6 @@ def set_screen():
     return screen
 
 
-def set_opening_screen_image():
-    """
-        기본 화면의 이미지 크기 및 위치 설정
-        :param : 없음
-        :return: 크기를 조정한 시작 화면의 이미지
-    """
-    coin_img = pygame.image.load("coin.png")
-    treasure_img = pygame.image.load("treasure.png")
-    coin_img_x = 50
-    coin_img_y = 50
-    treasure_img_x = 150
-    treasure_img_y = 150
-    coin_size_img = pygame.transform.scale(coin_img, (coin_img_x, coin_img_y))
-    treasure_size_img = pygame.transform.scale(treasure_img, (treasure_img_x, treasure_img_y))
-    return coin_size_img, treasure_size_img
-
-
-def opening_screen_image_show(coin_size_img, treasure_size_img, screen):
-    screen.blit(coin_size_img, (70, 80))
-    screen.blit(coin_size_img, (120, 120))
-    screen.blit(treasure_size_img, (60, 200))
-
-
 def opening(screen):
     """
         오프닝 화면을 표시하고, 도중에 플레이어의 아이디를 입력받는 함수를 호출
@@ -54,7 +31,9 @@ def opening(screen):
     text_title = class_of_text_and_image.Text('bold', 35, '하늘에서 동전이 떨어진다', 450, 200)
     text_subtitle = class_of_text_and_image.Text('original', 20, 'PRESS ANY KEY', 450, 300)
 
-    (coin_size_img, treasure_size_img) = set_opening_screen_image()
+    coin_img_1 = class_of_text_and_image.Image("coin.png", 70, 80, 50, 50)
+    coin_img_2 = class_of_text_and_image.Image("coin.png", 120, 120, 50, 50)
+    treasure_img = class_of_text_and_image.Imgae("treasure.png", 60, 200, 150, 150)
 
     while not finished:
         for event in pygame.event.get():
@@ -64,8 +43,11 @@ def opening(screen):
                 flag_id_input = True
 
         screen.fill((255, 255, 255))
-        opening_screen_image_show(coin_size_img, treasure_size_img, screen)
+
         text_title.screen_text_show(screen)
+        coin_img_1.screen_image_show(screen)
+        coin_img_2.screen_image_show(screen)
+        treasure_img.screen_image_show(screen)
 
         if flag_id_input is False:
             text_subtitle.screen_text_show(screen)
@@ -84,9 +66,11 @@ def enter_id(screen):
         :return: 입력받은 플레이어 아이디(문자열)
     """
 
-    (coin_size_img, treasure_size_img) = set_opening_screen_image()
+    coin_img_1 = class_of_text_and_image.Image("coin.png", 70, 80, 50, 50)
+    coin_img_2 = class_of_text_and_image.Image("coin.png", 120, 120, 50, 50)
+    treasure_img = class_of_text_and_image.Imgae("treasure.png", 60, 200, 150, 150)
     text_title = class_of_text_and_image.Text('bold', 35, '하늘에서 동전이 떨어진다', 450, 200)
-    text_enterid = class_of_text_and_image.Text('original', 20, 'ENTER YOUR ID', 450, 260)
+    text_enter_id = class_of_text_and_image.Text('original', 20, 'ENTER YOUR ID', 450, 260)
 
     string_player_id = ''
 
@@ -107,10 +91,12 @@ def enter_id(screen):
         text_player_id = class_of_text_and_image.Text('original', 20, string_player_id, 450, 300)
 
         screen.fill((255, 255, 255))
-        opening_screen_image_show(coin_size_img, treasure_size_img, screen)
         text_title.screen_text_show(screen)
-        text_enterid.screen_text_show(screen)
+        text_enter_id.screen_text_show(screen)
         text_player_id.screen_text_show(screen)
+        coin_img_1.screen_image_show(screen)
+        coin_img_2.screen_image_show(screen)
+        treasure_img.screen_image_show(screen)
 
         pygame.display.update()
 
@@ -138,8 +124,10 @@ def game_explain(screen, player_name):
     text_explain.append(class_of_text_and_image.Text('original', 16, explanation[0], 450, 90))
     for i in range(1, 10):
         text_explain.append(class_of_text_and_image.Text('original', 16, explanation[i], 450, 100 + 35 * i))
+    coin_img_1 = class_of_text_and_image.Image("coin.png", 70, 80, 50, 50)
+    coin_img_2 = class_of_text_and_image.Image("coin.png", 120, 120, 50, 50)
+    treasure_img = class_of_text_and_image.Imgae("treasure.png", 60, 200, 150, 150)
 
-    (coin_size_img, treasure_size_img) = set_opening_screen_image()
 
     finished = False
     while not finished:
@@ -149,9 +137,11 @@ def game_explain(screen, player_name):
             if event.type == pygame.KEYDOWN:
                 return
         screen.fill((255, 255, 255))
-        opening_screen_image_show(coin_size_img, treasure_size_img, screen)
         for i in range(10):
             text_explain[i].screen_text_show(screen)
+        coin_img_1.screen_image_show(screen)
+        coin_img_2.screen_image_show(screen)
+        treasure_img.screen_image_show(screen)
 
         pygame.display.update()
     return

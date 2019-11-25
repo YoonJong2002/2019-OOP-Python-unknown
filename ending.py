@@ -8,7 +8,6 @@ def insert_player_in_list(player):
     """
         게임이 종료되었을 때, list_of_players 의 적절한 위치에 플레이어를 삽입함
         :param player: 이번에 플레이한 플레이어 객체
-        :param list_of_players: 이때까지 플레이한 플레이어 객체들의 리스트
         :return: player 을 삽입한 상태의 list_of_players
     """
     f = open('ranking', 'rb')
@@ -18,6 +17,7 @@ def insert_player_in_list(player):
     list_of_players = sorted(list_of_players, key=lambda x: (x.collected_money, x.life_left, -x.time_spent))
     f = open('ranking', 'wb')
     pickle.dump(list_of_players, f)
+    f.close()
     return list_of_players
 
 

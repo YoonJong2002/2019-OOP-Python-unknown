@@ -23,5 +23,13 @@ class Text:
 
 
 class Image:
-    def __init__(self, what_image):
-        pass
+    def __init__(self, what_image, loca_x, loca_y, size_x, size_y):
+        self.original_image = pygame.image.load(what_image)
+        self.loca_x = loca_x
+        self.loca_y = loca_y
+        self.size_x = size_x
+        self.size_y = size_y
+        self.image = pygame.transform.scale(self.original_image, (self.size_x, self.size_y))
+
+    def screen_image_show(self, screen):
+        screen.blit(self.image, (self.loca_x, self.loca_y))
