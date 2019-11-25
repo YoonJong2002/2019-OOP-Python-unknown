@@ -15,20 +15,35 @@ def insert_player_in_list(player):
     f.close()
     list_of_players.append(player)
     list_of_players = sorted(list_of_players, key=lambda x: (x.collected_money, x.life_left, -x.time_spent))
+    for i in list_of_players:
+        if i == player:
+            rank_index = list_of_players.index(player)
     f = open('ranking', 'wb')
-    pickle.dump(list_of_players, f)
+    pickle.dump(list_of_players[:10], f)
     f.close()
-    return list_of_players
+    return list_of_players, rank_index+1
 
 
-def show_ranking(screen, list_of_players):
+def show_ranking(screen, list_of_players, my_rank):
     """
         정렬된 list of players 를 화면에 보여줌
         :param screen: 출력에 사용할 스크린
         :param list_of_players: 이때까지 플레이한 플레이어 객체들의 리스트
         :return: 없음
     """
-    pass
+    text_my_rank = class_of_text_and_image.Text('bold', 35, '하늘에서 동전이 떨어진다', 350, 50)
+    if my_rank >10:
+        pass
+    else:
+        pass
+    finished = False
+    while not finished:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                finished = True
+            if event.type == pygame.KEYDOWN:
+                return
+        text_my_rank.screen_text_show(screen)
 
 
 def play_again(screen):

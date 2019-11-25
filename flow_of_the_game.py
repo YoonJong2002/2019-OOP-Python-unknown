@@ -32,7 +32,7 @@ while True:
     end_time = time.time()  # 엔딩 시간 측정(플레이 시간 측정에 활용)
     player.time_spent = end_time - start_time  # 플레이 시간 계산
 
-    list_of_players = ending.insert_player_in_list(player)  # player 객체를 랭킹에 추가
-    ending.show_ranking(screen, list_of_players)  # 화면에 랭킹 보드 띄우기
+    (list_of_players, my_rank) = ending.insert_player_in_list(player)  # player 객체를 랭킹에 추가
+    ending.show_ranking(screen, list_of_players, my_rank)  # 화면에 랭킹 보드 띄우기
     if not ending.play_again(screen):  # 다시 플레이할 것인지 확인
         break
