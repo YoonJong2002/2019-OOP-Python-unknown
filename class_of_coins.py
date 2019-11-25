@@ -2,7 +2,7 @@ import pygame
 import numpy as np
 import random
 
-"""
+
 srf_h = 700
 srf_w = 500
 
@@ -62,7 +62,7 @@ def solveODEusingRK4(t, x, v):
 
     return x + dx, v + dv
 
-
+"""
 def bucket_moves(bucketX, bucket_v, dX,srf):
     if bucketX <= 50:
         dX = bucket_v
@@ -111,37 +111,18 @@ class BasicCoin:
         :param srf:
         :return:
         """
-        """
         global loopFlag, bucketX, bucket_v, dX, t, x, v, updatedX, updatedY
-        loopFlag = True
-        coin_init()
-        bucket_init()
-        while loopFlag:
-            if keyboard() == 2:
-                loopFlag = False
-
-            srf.fill((255, 255, 255))
-            [bucketX, bucket_v, dX] = bucket_moves(bucketX, bucket_v, dX, srf)  # bucket 의 이동.
-
-            t = t + dt
-            [x, v] = solveODEusingRK4(t, x, v)  # x 는 각변위
-            updatedX = gndCenterX + penLength * np.sin(x)
-            updatedY = gndCenterY + penLength * np.cos(x)
-
-            pygame.draw.line(srf, (0, 0, 0), (10, 20), (700, 20), 10)  # 줄이 매달린 천장
-            pygame.draw.line(srf, (100, 100, 100), (gndCenterX, gndCenterY), (updatedX, updatedY), 2)  # 줄
-            srf.blit(coin_img_set, (int(updatedX) - 15, int(updatedY) - 15))  # 동전
-            pygame.draw.line(srf, (100, 0, 100), (int(updatedX), int(updatedY)),
-                             (int(updatedX + penLength * v * np.cos(-x)), int(updatedY + penLength * v * np.sin(-x))),
-                             2)  # 속도 벡터 표시
-
-            pygame.display.update()  # 동전은 image, update 를 해야 보임
-            pygame.time.delay(40)
-            pygame.display.flip()
-        """
-
+        [x, v] = solveODEusingRK4(t, x, v)  # x 는 각변위
+        updatedX = gndCenterX + penLength * np.sin(x)
+        updatedY = gndCenterY + penLength * np.cos(x)
+        pygame.draw.line(srf, (0, 0, 0), (10, 20), (700, 20), 10)  # 줄이 매달린 천장
+        pygame.draw.line(srf, (100, 100, 100), (gndCenterX, gndCenterY), (updatedX, updatedY), 2)  # 줄
+        srf.blit(coin_img_set, (int(updatedX) - 15, int(updatedY) - 15))  # 동전
+        pygame.draw.line(srf, (100, 0, 100), (int(updatedX), int(updatedY)),(int(updatedX + penLength * v * np.cos(-x)), int(updatedY + penLength * v * np.sin(-x))),2)  # 속도 벡터 표시
+        pygame.display.update()  # 동전은 image, update 를 해야 보임
+    return
+"""
     def coin_falls(self, srf):
-        """
         매 순간 코인의 좌표(x, y)를 받고 dt 이후의 x,y를 반환
         :param srf:
         :return:

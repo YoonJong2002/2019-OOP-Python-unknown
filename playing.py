@@ -1,23 +1,44 @@
 import class_of_coins
+from function_of_bucket import *
 
 
-def swing_show(screen, coin, bucket):
-    pass
+def swing_show(screen, coin, bucket, level):
     """
-    coin 클래스의 coin_swing 함수를 돌려서 매 순간 coin의 좌표를 받음
-    bucket 클래스의 함수를 돌려서 매 순간 bucket의 좌표를 받음
-    각 위치에 coin과 bucket 이미지를 출력함
+    :param screen:
+    :param coin:
+    :param bucket:
+    :return:
     """
+    coin.coin_init()
+    bucket_initial_location(level)
+    loop_flag = True
+    while loop_flag:
+        if keyboard() == 2:
+            loop_flag = False
+        [x, y] = coin.coin_swing(x, y, screen)
+        [bucket_x, bucket_v, dx] = bucket_location_movement(bucket_x, bucket_v, dx, screen, level)
+        pygame.display.update()
+
 
 
 def fall_show(screen, coin, bucket):
-    pass
     """
     coin 클래스의 coin_swing 함수를 돌려서 매 순간 coin의 좌표를 받음
     bucket 클래스의 함수를 돌려서 매 순간 bucket의 좌표를 받음
     각 위치에 coin과 bucket 이미지를 출력함
-    리턴값: coin과 bucket의 최종 x좌표값(각각 해서 2개의 리턴값)
+    :param screen:
+    :param coin:
+    :param bucket:
+    :return: coin과 bucket의 최종 x좌표값(각각 해서 2개의 리턴값)
     """
+    loop_flag = True
+    while loop_flag:
+        if keyboard() == 2:
+            loop_flag = False
+        [x, y] = coin.coin_falls()
+        bucket_x = bucket_location_movement(bucket_x)
+        pygame.display.update()
+
 
 def did_coin_enter(coin_final_x, bucket_final_x):
     """
@@ -35,7 +56,7 @@ def did_coin_enter(coin_final_x, bucket_final_x):
         return False
 
 
-def basic_playing_flow(screen, player, coin):
+def basic_playing_flow(screen, player, coin, level):
     """
         플레이의 전체적인 흐름을 진행하는 함수, 하나의 동전에 대한 함수
         :param screen: 출력에 사용할 스크린
@@ -44,7 +65,8 @@ def basic_playing_flow(screen, player, coin):
         :return: 게임이 종료되면(생명을 전부 소모하면) True 반환, 종료되지 않으면 False 반환
     """
 
-    swing_show()
+    swing_show(screen, coin, bucket, level)
+    fall_show()
     # (coin_final_x, bucket_final_x) = fall_show(screen, coin, bucket)
 
     if did_coin_enter(coin_final_x, bucket_final_x) is True:
@@ -65,7 +87,7 @@ def easy_play(screen, player):
     for i in range(5):
         coin = class_of_coins.EasyCoin(easy_coin_cost)
         # bucket = class_of_buckets.EasyBucket() 이거 대신 bucket 위치 지정 함수로
-        if basic_playing_flow(screen, player, coin) is True:  # 파라미터에 나중에 bucket 추가할 것
+        if basic_playing_flow(screen, player, coin, 'easy') is True:  # 파라미터에 나중에 bucket 추가할 것
             return True
     return False
 
@@ -81,7 +103,7 @@ def medium_play(screen, player):
     for i in range(5):
         coin = class_of_coins.MediumCoin(medium_coin_cost)
         # bucket = class_of_buckets.MediumBucket() 이거 대신 bucket 위치 지정 함수로
-        if basic_playing_flow(screen, player, coin) is True: # 파라미터에 나중에 bucket 추가할 것
+        if basic_playing_flow(screen, player, coin, 'medium') is True: # 파라미터에 나중에 bucket 추가할 것
             return True
     return False
 
@@ -97,6 +119,6 @@ def hard_play(screen, player):
     for i in range(5):
         coin = class_of_coins.HardCoin(hard_coin_cost)
         # bucket = class_of_buckets.HardBucket() 이거 대신 bucket 위치 지정 함수로
-        if basic_playing_flow(screen, player, coin) is True:  # 파라미터에 나중에 bucket 추가할 것
+        if basic_playing_flow(screen, player, coin, 'hard') is True:  # 파라미터에 나중에 bucket 추가할 것
             return True
     return False
