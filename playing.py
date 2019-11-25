@@ -22,7 +22,8 @@ def swing_show(screen, coin, level):
     while loop_flag:
         if keyboard() == 2:
             loop_flag = False
-        [x, y] = coin.coin_swing(x, y, screen)
+        pygame.draw.line(screen, (0, 0, 0), (10, 20), (700, 20), 10)  # 줄이 매달린 천장
+        [coin_x, coin_v] = coin.coin_swing(coin_x, coin_v, screen)
         [bucket_x, bucket_v, dx] = bucket_location_movement(bucket_x, bucket_v, dx, screen, level)
         pygame.display.update()
 
