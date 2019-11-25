@@ -128,7 +128,6 @@ def game_explain(screen, player_name):
     coin_img_2 = class_of_text_and_image.Image("coin.png", 120, 120, 50, 50)
     treasure_img = class_of_text_and_image.Imgae("treasure.png", 60, 200, 150, 150)
 
-
     finished = False
     while not finished:
         for event in pygame.event.get():

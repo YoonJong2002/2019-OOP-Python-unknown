@@ -1,5 +1,6 @@
 import random
 import pygame
+import class_of_text_and_image
 
 def bucket_init(level):
     global bucket_x
@@ -26,16 +27,18 @@ def bucket_location_movement(bucket_x, bucket_v, dx, screen, level):
     :param x: 처음 x좌표
     :return: dt 이후의 x좌표
     """
+
+    bucket_img = class_of_text_and_image.Image("bucket.png", bucket_x, 450, 100, 80)
+
     if level == 'hard':
         if bucket_x <= 50:
             dx = bucket_v
         if bucket_x >= 600:
             dx = -bucket_v
-        bucket_x = bucket_x + dx
-        bucket_y = 450
-        screen.blit(bucket_img_set, (bucket_x, bucket_y))
+        bucket_img.loca_x = bucket_x + dx
+        bucket_img.screen_image_show(screen)
         return bucket_x, bucket_v, dx
     else:
-        return x
+        return bucket_x
 
     # 범위 넘어가면 보정조건도 추가!!
