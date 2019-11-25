@@ -1,7 +1,8 @@
 import pygame
 import numpy as np
 import random
-
+from class_of_text_and_image import *
+from pygame.locals import *
 
 srf_h = 700
 srf_w = 500
@@ -39,8 +40,7 @@ def keyboard():
 
 
 def calcODEFunc(tVal, xVal, vVal):
-    return -pen_fm / (pen_m * pen_l * pen_l + pen_J) * vVal - pen_m * pen_g * pen_l / (
-                pen_m * pen_l * pen_l + pen_J) * xVal
+    return -pen_fm / (pen_m * pen_l * pen_l + pen_J) * vVal - pen_m * pen_g * pen_l / (pen_m * pen_l * pen_l + pen_J) * xVal
 
 
 # Runge Kutta 미방 함수 구현하기
@@ -104,61 +104,64 @@ class BasicCoin:
         self.cost = cost
         self.level = level
         self.screen = screen
+        self.image = Image("coin.png", 0, 0, 30, 30)
+        self.neworiginX = 0
+        self.neworiginY = 0
+        self.v_x = 0
+        self.v_y = 0
 
-    def coin_swing(self, t, x, v, srf):
+    def coin_init(self):
+        return 30 * np.pi / 180, 0  # 진자 운동의 x, v 초기화
+
+    def coin_swing(self, t, x, v):
         """
         매 순간 코인의 좌표(x, y)를 받고 dt 이후의 x,y를 반환
         :param srf:
         :return:
         """
-        global loopFlag, bucketX, bucket_v, dX, updatedX, updatedY, t
         [x, v] = solveODEusingRK4(t, x, v)  # x 는 각변위
-        updatedX = gndCenterX + penLength * np.sin(x)
-        updatedY = gndCenterY + penLength * np.cos(x)
-        pygame.draw.line(srf, (100, 100, 100), (gndCenterX, gndCenterY), (updatedX, updatedY), 2)  # 줄
-        srf.blit(coin_img_set, (int(updatedX) - 15, int(updatedY) - 15))  # 동전
-        pygame.draw.line(srf, (100, 0, 100), (int(updatedX), int(updatedY)),(int(updatedX + penLength * v * np.cos(-x)), int(updatedY + penLength * v * np.sin(-x))),2)  # 속도 벡터 표시
+        self.image.loca_x = gndCenterX + penLength * np.sin(x) - 15
+        self.image.loca_y = gndCenterY + penLength * np.cos(x) - 15
+        self.image.screen_image_show(self.screen)
+        pygame.draw.line(self.screen, (100, 100, 100), (gndCenterX, gndCenterY), (self.image.loca_x + 15, self.image.loca_y - 15), 2)  # 줄
         return x, v
 
-    """
-    def coin_falls(self, srf):
-        매 순간 코인의 좌표(x, y)를 받고 dt 이후의 x,y를 반환
-        :param srf:
-        :return:
-        global neworiginY, neworiginX, bucketX, bucket_w, bucket_v, updatedX, updatedY, loopFlag, v_x, v_y, t, dX
-        t = 0  # 시간 초기화
-        v_x = penLength * v * np.cos(-x)  # 줄을 끊은 순간에 동전의 속도
-        v_y = penLength * v * np.sin(-x)
-        neworiginX = updatedX  # 줄을 끊긴 곳에서 동전의 포물선 운동 시작
-        neworiginY = updatedY
-        loopFlag = True
-
-        while loopFlag:
-            if keyboard() == 2:
-                loopFlag = False
-
-            if neworiginY + updatedY >= srf_h - bucket_h:  # neworiginY + updatedY : 코인 중심의 Y, srf_h - bucket_h : 버킷 윗면의 높이
-                self.did_coin_enter()
-                break
-
-            srf.fill((255, 255, 255))
-            t = t + dt
-            updatedX = v_x * t
-            updatedY = v_y * t + 0.5 * 700 * t ** 2
-            srf.blit(coin_img_set, (int(updatedX + neworiginX) - 15, int(updatedY + neworiginY) - 15))  # 날라가는 동전
-            [bucketX, bucket_v, dX] = bucket_moves(bucketX, bucket_v, dX, srf)  # bucket
-            pygame.time.delay(40)
-            pygame.display.flip()
+    def coin_swing_end(self, x, v):
         """
+        동전의 진자운동 변수를 포물선 운동에 쓰이는 변수로 변환.
+        :param x: 진자운동 마지막의 각 위치
+        :param v: 진자운동 마지막의 각 속도
+        :return: 없음
+        """
+        self.neworiginX = gndCenterX + penLength * np.sin(x)
+        self.neworiginY = gndCenterY + penLength * np.cos(x)
+        self.v_x = penLength * v * np.cos(-x)  # 줄을 끊은 순간에 동전의 속도
+        self.v_y = penLength * v * np.sin(-x)
+
+    def coin_falls(self, t, v_x, v_y):
+        """
+        t 시간에, 동전의 위치를 계산하여 표시함
+        """
+        updatedX = v_x * t
+        updatedY = v_y * t + 0.5 * 700 * t ** 2
+        self.image.screen_image_show(self.screen)
+        self.image.loca_x = self.neworiginX + updatedX - 15
+        self.image.loca_y = self.neworiginY + updatedY - 15
+        self.image.screen_image_show(self.screen)
+        return self.neworiginX + updatedX
 
 
 class EasyCoin(BasicCoin):
     def __init__(self, cost, screen):
         self.cost = cost
         self.screen = screen
+        self.level = 'easy'
         self.stringlength = 10  # 코드 돌려보면서 적절히 쉬운 길이로 조절 부탁!
-        # self.image = # 이미지 파일 삽입하는 방법 등..?
-
+        self.image = Image("coin.png", 0, 0, 30, 30)
+        self.neworiginX = 0
+        self.neworiginY = 0
+        self.v_x = 0
+        self.v_y = 0
 
 class MediumCoin(BasicCoin):
     def __init__(self, cost, level):

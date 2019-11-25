@@ -1,13 +1,15 @@
 import random
 import pygame
-import class_of_text_and_image
+from class_of_text_and_image import *
+
 
 def bucket_init(level):
-    global bucket_x
     bucket_x = bucket_initial_location(level)
     t = 0
     bucket_v = 0.5
-    dx  = bucket_v
+    dx = bucket_v
+    return bucket_x, bucket_v, dx, t
+
 
 def bucket_initial_location(level):
     """
@@ -28,7 +30,7 @@ def bucket_location_movement(bucket_x, bucket_v, dx, screen, level):
     :return: dt 이후의 x좌표
     """
 
-    bucket_img = class_of_text_and_image.Image("bucket.png", bucket_x, 450, 100, 80)
+    bucket_img = Image("bucket.png", bucket_x, 450, 100, 80)
 
     if level == 'hard':
         if bucket_x <= 50:
@@ -39,6 +41,12 @@ def bucket_location_movement(bucket_x, bucket_v, dx, screen, level):
         bucket_img.screen_image_show(screen)
         return bucket_x, bucket_v, dx
     else:
-        return bucket_x
+        return bucket_x, bucket_v, dx
 
     # 범위 넘어가면 보정조건도 추가!!
+
+class Bucket():
+    def __init__(self):
+        self.bucket_x = 0
+        self.bucket_v = 0
+        self.dx = 0

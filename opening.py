@@ -33,7 +33,7 @@ def opening(screen):
 
     coin_img_1 = class_of_text_and_image.Image("coin.png", 70, 80, 50, 50)
     coin_img_2 = class_of_text_and_image.Image("coin.png", 120, 120, 50, 50)
-    treasure_img = class_of_text_and_image.Imgae("treasure.png", 60, 200, 150, 150)
+    treasure_img = class_of_text_and_image.Image("treasure.png", 60, 200, 150, 150)
 
     while not finished:
         for event in pygame.event.get():
@@ -68,7 +68,7 @@ def enter_id(screen):
 
     coin_img_1 = class_of_text_and_image.Image("coin.png", 70, 80, 50, 50)
     coin_img_2 = class_of_text_and_image.Image("coin.png", 120, 120, 50, 50)
-    treasure_img = class_of_text_and_image.Imgae("treasure.png", 60, 200, 150, 150)
+    treasure_img = class_of_text_and_image.Image("treasure.png", 60, 200, 150, 150)
     text_title = class_of_text_and_image.Text('bold', 35, '하늘에서 동전이 떨어진다', 450, 200)
     text_enter_id = class_of_text_and_image.Text('original', 20, 'ENTER YOUR ID', 450, 260)
 
@@ -126,7 +126,7 @@ def game_explain(screen, player_name):
         text_explain.append(class_of_text_and_image.Text('original', 16, explanation[i], 450, 100 + 35 * i))
     coin_img_1 = class_of_text_and_image.Image("coin.png", 70, 80, 50, 50)
     coin_img_2 = class_of_text_and_image.Image("coin.png", 120, 120, 50, 50)
-    treasure_img = class_of_text_and_image.Imgae("treasure.png", 60, 200, 150, 150)
+    treasure_img = class_of_text_and_image.Image("treasure.png", 60, 200, 150, 150)
 
     finished = False
     while not finished:
