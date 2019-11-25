@@ -23,4 +23,5 @@ class Text:
 
 
 class Image:
-    def __init__(self, what_image, ):
+    def __init__(self, what_image):
+        pass
