@@ -7,7 +7,6 @@ import ending
 list_of_players = []
 
 pygame.init()
-#####
 
 while True:
     screen = opening.set_screen()  # 기본 스크린 생성하여 screen에 저장

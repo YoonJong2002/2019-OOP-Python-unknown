@@ -7,6 +7,7 @@ class Player:
 
 
     def did_you_die(self):
+        self.life_left = self.life_left - 1
         if self.life_left == 0:
             return True
         else:
