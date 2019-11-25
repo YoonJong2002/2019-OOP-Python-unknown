@@ -1,6 +1,13 @@
 import random
 import pygame
 
+def bucket_init(level):
+    global bucket_x
+    bucket_x = bucket_initial_location(level)
+    t = 0
+    bucket_v = 0.5
+    dx  = bucket_v
+
 def bucket_initial_location(level):
     """
     하나의 동전을 던질 때마다 bucket의 초기 위치를 돌려줌

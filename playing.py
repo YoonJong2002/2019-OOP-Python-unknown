@@ -2,15 +2,22 @@ import class_of_coins
 from function_of_bucket import *
 
 
-def swing_show(screen, coin, bucket, level):
+def keyboard():
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            return 1
+        if event.type == pygame.KEYDOWN:
+            return 2
+
+
+def swing_show(screen, coin, level):
     """
     :param screen:
     :param coin:
-    :param bucket:
-    :return:
+    :return: 없음
     """
     coin.coin_init()
-    bucket_initial_location(level)
+    bucket_init(level)     # t = 0, bucket 의 x, v, dx를 초기화
     loop_flag = True
     while loop_flag:
         if keyboard() == 2:
@@ -18,7 +25,6 @@ def swing_show(screen, coin, bucket, level):
         [x, y] = coin.coin_swing(x, y, screen)
         [bucket_x, bucket_v, dx] = bucket_location_movement(bucket_x, bucket_v, dx, screen, level)
         pygame.display.update()
-
 
 
 def fall_show(screen, coin, bucket):
