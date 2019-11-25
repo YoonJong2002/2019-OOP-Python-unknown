@@ -2,6 +2,7 @@ import pygame
 import numpy as np
 import random
 
+"""
 srf_h = 700
 srf_w = 500
 
@@ -95,6 +96,8 @@ def coin_init():
     x = 30 * np.pi / 180  # 진자 운동의 x, v 초기화
     v = 0
 
+"""
+
 
 class BasicCoin:
     def __init__(self, screen, cost, level):
@@ -102,7 +105,13 @@ class BasicCoin:
         self.level = level
         self.screen = screen
 
-    def coin_swings(self, srf):
+    def coin_swing(self, x, y, srf):
+        """
+        매 순간 코인의 좌표(x, y)를 받고 dt 이후의 x,y를 반환
+        :param srf:
+        :return:
+        """
+        """
         global loopFlag, bucketX, bucket_v, dX, t, x, v, updatedX, updatedY
         loopFlag = True
         coin_init()
@@ -129,8 +138,15 @@ class BasicCoin:
             pygame.display.update()  # 동전은 image, update 를 해야 보임
             pygame.time.delay(40)
             pygame.display.flip()
+        """
 
     def coin_falls(self, srf):
+        """
+        매 순간 코인의 좌표(x, y)를 받고 dt 이후의 x,y를 반환
+        :param srf:
+        :return:
+        """
+        """
         global neworiginY, neworiginX, bucketX, bucket_w, bucket_v, updatedX, updatedY, loopFlag, v_x, v_y, t, dX
         t = 0  # 시간 초기화
         v_x = penLength * v * np.cos(-x)  # 줄을 끊은 순간에 동전의 속도
@@ -155,20 +171,7 @@ class BasicCoin:
             [bucketX, bucket_v, dX] = bucket_moves(bucketX, bucket_v, dX, srf)  # bucket
             pygame.time.delay(40)
             pygame.display.flip()
-
-    def did_coin_enter(self):
         """
-            coin_fall 메서드에서 받은 매개변수를 이용하여 동전을 획득했는지 판단
-            :param ?????????: 동전 획득 여부를 판단하니 위한 매개변수
-            :return: 동전을 획득한 경우 True, 획득하지 못한 경우 False를 반환
-        """
-        if abs((int(updatedX + neworiginX)) - (
-                bucketX + bucket_w / 2)) <= bucket_w / 2:  # updatedX+neworiginX : 코인의 중심 X , bucketX + bucket_w/2 : bucket 중심 X
-            print('yay')
-            return True
-        else:
-            print('aww')
-            return False
 
 
 class EasyCoin(BasicCoin):
