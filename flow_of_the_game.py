@@ -23,6 +23,7 @@ while True:
     opening.game_explain(screen, player.player_name)  # 게임 설명 띄우기
 
     start_time = time.time()  # 시작 시간 측정(플레이 시간 측정에 활용)
+    print("Game Start")
     is_game_over = False
     is_game_over = playing.easy_play(screen, player)  # easy 모드 플레이 실행
     if is_game_over is False:

@@ -18,35 +18,36 @@ def bucket_initial_location(level):
     :return: bucket의 초기 x좌표
     """
     if level == 'easy':
-        return random.randrange(150, 650)
+        return random.randrange(150, 550)
     else:
-        return random.randrange(50, 750)
+        return random.randrange(50, 650)
 
 
-def bucket_location_movement(bucket_x, bucket_v, dx, screen, level):
+def bucket_location_movement(Bucket, screen, level):
     """
     hard 모드인 경우에만, dt가 지난 이후의 x좌표를 리턴해줌
     :param x: 처음 x좌표
     :return: dt 이후의 x좌표
     """
 
-    bucket_img = Image("bucket.png", bucket_x, 450, 100, 80)
+    bucket_img = Image("bucket.png", Bucket.bucket_x, 420, 100, 80)
 
     if level == 'hard':
-        if bucket_x <= 50:
-            dx = bucket_v
-        if bucket_x >= 600:
-            dx = -bucket_v
-        bucket_img.loca_x = bucket_x + dx
+        if Bucket.bucket_x <= 50:
+            Bucket.dx = Bucket.bucket_v
+        if Bucket.bucket_x >= 600:
+            Bucket.dx = -Bucket.bucket_v
+        bucket_img.loca_x = Bucket.bucket_x + Bucket.dx - bucket_img.size_x/2
         bucket_img.screen_image_show(screen)
-        return bucket_x, bucket_v, dx
+        return Bucket
     else:
-        return bucket_x, bucket_v, dx
+        bucket_img.loca_x = Bucket.bucket_x - bucket_img.size_x / 2
+        bucket_img.screen_image_show(screen)
+        return Bucket
 
-    # 범위 넘어가면 보정조건도 추가!!
 
-class Bucket():
-    def __init__(self):
-        self.bucket_x = 0
-        self.bucket_v = 0
-        self.dx = 0
+class Bucket:
+    def __init__(self, x, v, dx):
+        self.bucket_x = x
+        self.bucket_v = v
+        self.dx = dx

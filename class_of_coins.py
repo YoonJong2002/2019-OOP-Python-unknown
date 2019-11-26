@@ -62,42 +62,6 @@ def solveODEusingRK4(t, x, v):
 
     return x + dx, v + dv
 
-"""
-def bucket_moves(bucketX, bucket_v, dX,srf):
-    if bucketX <= 50:
-        dX = bucket_v
-    if bucketX >= 600:
-        dX = -bucket_v
-
-    bucketX = bucketX + dX
-    bucketY = 450
-    srf.blit(bucket_img_set, (bucketX, bucketY))
-    pygame.display.update()
-    return bucketX, bucket_v, dX
-
-
-def bucket_random(srf):
-    global  bucketX, bucketY
-    bucketX = random.randrange(50, 650)
-    bucketY = 450
-    srf.blit(bucket_img_set, (bucketX, bucketY))
-    pygame.display.update()
-
-
-def bucket_init():
-    global  bucketX, bucket_v, dX
-    bucketX = random.randrange(50, 650)
-    bucket_v = 1
-    dX = bucket_v
-
-
-def coin_init():
-    global x, v
-    x = 30 * np.pi / 180  # 진자 운동의 x, v 초기화
-    v = 0
-
-"""
-
 
 class BasicCoin:
     def __init__(self, screen, cost, level):
@@ -123,7 +87,7 @@ class BasicCoin:
         self.image.loca_x = gndCenterX + penLength * np.sin(x) - 15
         self.image.loca_y = gndCenterY + penLength * np.cos(x) - 15
         self.image.screen_image_show(self.screen)
-        pygame.draw.line(self.screen, (100, 100, 100), (gndCenterX, gndCenterY), (self.image.loca_x + 15, self.image.loca_y - 15), 2)  # 줄
+        pygame.draw.line(self.screen, (100, 100, 100), (gndCenterX, gndCenterY), (self.image.loca_x + 15, self.image.loca_y + 15), 2)  # 줄
         return x, v
 
     def coin_swing_end(self, x, v):
@@ -164,16 +128,26 @@ class EasyCoin(BasicCoin):
         self.v_y = 0
 
 class MediumCoin(BasicCoin):
-    def __init__(self, cost, level):
+    def __init__(self, cost, screen):
         self.cost = cost
-        self.level = level
-        self.stringlength = 10 - level  # 코드 돌려보면서 적절히 길이 조절 부탁!
-        # self.image = # 이미지 파일 삽입하는 방법 등..?
+        self.screen = screen
+        self.level = 'medium'
+        self.stringlength = 10  # 코드 돌려보면서 적절히 쉬운 길이로 조절 부탁!
+        self.image = Image("coin.png", 0, 0, 30, 30)
+        self.neworiginX = 0
+        self.neworiginY = 0
+        self.v_x = 0
+        self.v_y = 0
 
 
 class HardCoin(BasicCoin):
-    def __init__(self, cost, level):
+    def __init__(self, cost, screen):
         self.cost = cost
-        self.level = level
-        self.stringlength = 10 - level*2  # 얘도 코드 돌려보면서 길이 조절 부탁!
-        # self.image = # 이미지 파일 삽입?
+        self.screen = screen
+        self.level = 'hard'
+        self.stringlength = 10  # 코드 돌려보면서 적절히 쉬운 길이로 조절 부탁!
+        self.image = Image("coin.png", 0, 0, 30, 30)
+        self.neworiginX = 0
+        self.neworiginY = 0
+        self.v_x = 0
+        self.v_y = 0

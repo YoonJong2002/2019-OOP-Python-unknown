@@ -20,21 +20,22 @@ def swing_show(coin):
     """
     [coin_x, coin_v] = coin.coin_init()
     [bucket_x, bucket_v, dx, t] = bucket_init(coin.level)     # t = 0, bucket 의 x, v, dx를 초기화
+    bucket = Bucket(bucket_x, bucket_v, dx)     # bucket 객체를 이용해 bucket 관련 값 저장.
     loop_flag = True
     while loop_flag:
         if keyboard() == 2:
             loop_flag = False
-        pygame.display.init()
+        coin.screen.fill((255, 255, 255))
         t = t + dt
         pygame.draw.line(coin.screen, (0, 0, 0), (10, 20), (700, 20), 10)  # 줄이 매달린 천장
         [coin_x, coin_v] = coin.coin_swing(t, coin_x, coin_v)
-        [bucket_x, bucket_v, dx] = bucket_location_movement(bucket_x, bucket_v, dx, coin.screen, coin.level)
-        pygame.display.update()
+        bucket = bucket_location_movement(bucket, coin.screen, coin.level)
+        pygame.time.delay(10)
         pygame.display.flip()
     coin.coin_swing_end(coin_x, coin_v)
+    return bucket
 
-
-def fall_show(coin):
+def fall_show(coin, bucket):
     """
     coin 클래스의 coin_swing 함수를 돌려서 매 순간 coin의 좌표를 받음
     bucket 클래스의 함수를 돌려서 매 순간 bucket의 좌표를 받음
@@ -49,12 +50,16 @@ def fall_show(coin):
     while loop_flag:
         if keyboard() == 2:
             loop_flag = False
+        if 420 <= coin.image.loca_y + 15:   # 동전이 바구니에 들어가면 while 끝난다.
+            loop_flag = False
         t = t + dt
-        pygame.display.init()
+        coin.screen.fill((255, 255, 255))
         coin_x = coin.coin_falls(t, coin.v_x, coin.v_y)
-        [bucket_x, bucket_v, dx] = bucket_location_movement(bucket_x, bucket_v, dx, coin.screen, coin.level)
+        bucket = bucket_location_movement(bucket, coin.screen, coin.level)
         pygame.display.update()
-    return bucket_x, coin_x
+        pygame.time.delay(10)
+        pygame.display.flip()
+    return coin_x, bucket.bucket_x
 
 
 def did_coin_enter(coin_final_x, bucket_final_x):
@@ -81,9 +86,8 @@ def basic_playing_flow(player, coin):
         :param coin: 플레이에 사용될 동전 객체
         :return: 게임이 종료되면(생명을 전부 소모하면) True 반환, 종료되지 않으면 False 반환
     """
-
-    swing_show(coin)
-    [coin_final_x, bucket_final_x] = fall_show(coin)
+    bucket = swing_show(coin)
+    [coin_final_x, bucket_final_x] = fall_show(coin, bucket)
 
     if did_coin_enter(coin_final_x, bucket_final_x) is True:
         player.you_collected(coin.cost)
@@ -102,8 +106,8 @@ def easy_play(screen, player):
     easy_coin_cost = 50
     for i in range(5):
         coin = class_of_coins.EasyCoin(easy_coin_cost, screen)
-        # bucket = class_of_buckets.EasyBucket() 이거 대신 bucket 위치 지정 함수로
-        if basic_playing_flow(player, coin) is True:  # 파라미터에 나중에 bucket 추가할 것
+        print(player.life_left, player.collected_money)
+        if basic_playing_flow(player, coin) is True:  # 이번 레벨을 수행하는 도중에 생명 5개 소진 했을 경우, True
             return True
     return False
 
@@ -117,9 +121,9 @@ def medium_play(screen, player):
     """
     medium_coin_cost = 100
     for i in range(5):
-        coin = class_of_coins.MediumCoin(medium_coin_cost)
+        coin = class_of_coins.MediumCoin(medium_coin_cost, screen)
         # bucket = class_of_buckets.MediumBucket() 이거 대신 bucket 위치 지정 함수로
-        if basic_playing_flow(screen, player, coin, 'medium') is True: # 파라미터에 나중에 bucket 추가할 것
+        if basic_playing_flow(player, coin) is True: # 파라미터에 나중에 bucket 추가할 것
             return True
     return False
 
@@ -131,10 +135,10 @@ def hard_play(screen, player):
         :param player: 플레이어 객체
         :return: 도중 게임이 종료되면 True 반환, 종료되지 않으면 False 반환
     """
-    medium_coin_cost = 500
+    hard_coin_cost = 500
     for i in range(5):
-        coin = class_of_coins.HardCoin(hard_coin_cost)
+        coin = class_of_coins.HardCoin(hard_coin_cost, screen)
         # bucket = class_of_buckets.HardBucket() 이거 대신 bucket 위치 지정 함수로
-        if basic_playing_flow(screen, player, coin, 'hard') is True:  # 파라미터에 나중에 bucket 추가할 것
+        if basic_playing_flow(player, coin) is True:  # 파라미터에 나중에 bucket 추가할 것
             return True
     return False

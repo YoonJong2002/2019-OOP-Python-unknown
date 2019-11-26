@@ -103,7 +103,7 @@ def coin_swings():
         pygame.draw.line(srf, (0, 0, 0), (10, 20), (700, 20), 10)   # 줄이 매달린 천장
         pygame.draw.line(srf, (100, 100, 100), (gndCenterX, gndCenterY), (updatedX, updatedY), 2)   # 줄
         srf.blit(coin_img_set, (int(updatedX)-15, int(updatedY)-15))    # 동전
-        pygame.draw.line(srf, (100, 0, 100) ,(int(updatedX), int(updatedY)), (int(updatedX+penLength*v*np.cos(-x)), int(updatedY+penLength*v*np.sin(-x))),2)    # 속도 벡터 표시
+        pygame.draw.line(srf, (100, 0, 100),(int(updatedX), int(updatedY)), (int(updatedX+penLength*v*np.cos(-x)), int(updatedY+penLength*v*np.sin(-x))),2)    # 속도 벡터 표시
 
         pygame.display.update()     # 동전은 image, update 를 해야 보임
         pygame.time.delay(40)
@@ -140,7 +140,12 @@ def coin_falls():
         pygame.time.delay(40)
         pygame.display.flip()
 
-
-x = 30 * np.pi / 180  # 진자 운동의 x, v 초기화
-v = 0
 game_is_on = True
+while game_is_on:
+    if keyboard() == 2:
+        game_is_on = False
+    x = 30 * np.pi / 180  # 진자 운동의 x, v 초기화
+    v = 0
+    coin_swings()
+    coin_falls()
+
