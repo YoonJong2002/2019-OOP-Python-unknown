@@ -92,7 +92,7 @@ def fall_show(player, coin, bucket):
     :param player: 플레이어 객체(화면에 점수를 표시하기 위해 전달함)
     :param coin:
     :param bucket:
-    :return: coin과 bucket의 최종 x좌표값(각각 해서 2개의 리턴값)
+    :return: coin 과 bucket 의 최종 x 좌표값(각각 해서 2개의 리턴값)
     """
     t = 0
     loop_flag = True

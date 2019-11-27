@@ -95,7 +95,6 @@ class BasicCoin:
         """
         updatedX = v_x * t
         updatedY = v_y * t + 0.5 * 700 * t ** 2
-        self.image.screen_image_show(self.screen)
         self.image.loca_x = self.neworiginX + updatedX - 15
         self.image.loca_y = self.neworiginY + updatedY - 15
         self.image.screen_image_show(self.screen)
