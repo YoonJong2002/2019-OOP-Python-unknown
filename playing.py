@@ -23,11 +23,8 @@ def new_level_started(level, screen):
 
     finished = False
     while not finished:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                finished = True
-            if event.type == pygame.KEYDOWN:
-                return
+        if keyboard():
+            finished = True
 
         screen.fill((255, 255, 255))
         text_new_level.screen_text_show(screen)
@@ -37,19 +34,15 @@ def new_level_started(level, screen):
         pygame.display.update()
 
 
-def show_my_score(screen, player, text_show_money, text_show_time, list_of_life_image):
+def show_my_score(screen, text_show_money, list_of_life_image):
     """
     화면의 우측 상단에 현재 자신의 점수(획득한 금액)과 남은 생명 개수, 현재까지 진행 시간을 표시
     :param screen: 출력할 스크린
-    :param player: 플레이어 객체(플레이 시간 업데이트에 사용)
     :param text_show_money: 출력할 텍스트 객체 1
-    :param text_show_time: 출력할 텍스트 객체 2
     :param list_of_life_image: 출력할 이미지 객체
     :return: 없음
     """
-    text_show_time.font_text = '게임 시간: ' + str(time.time() - player.start_time)
     text_show_money.screen_text_show(screen)
-    text_show_time.screen_text_show(screen)
     for i in list_of_life_image:
         i.screen_image_show(screen)
 
@@ -66,7 +59,6 @@ def swing_show(player, coin):
     bucket = class_function_of_bucket.Bucket(bucket_x, bucket_v, dx)     # bucket 객체를 이용해 bucket 관련 값 저장.
 
     text_show_money = Text('original', 20, '획득한 금액: ' + str(player.collected_money) + ' 원', 550, 50)
-    text_show_time = Text('original', 20, '게임 시간: ' + str(time.time() - player.start_time), 550, 80)
     list_of_life_image = []
     for i in range(player.life_left):
         list_of_life_image.append(Image("life.png", 650 - i * 35, 100, 25, 25))
@@ -80,7 +72,7 @@ def swing_show(player, coin):
         pygame.draw.line(coin.screen, (0, 0, 0), (10, 20), (700, 20), 10)  # 줄이 매달린 천장
         [coin_x, coin_v] = coin.coin_swing(coin_x, coin_v)
         bucket = class_function_of_bucket.bucket_location_movement(bucket, coin.screen, coin.level)
-        show_my_score(coin.screen, player, text_show_money, text_show_time, list_of_life_image)
+        show_my_score(coin.screen, text_show_money, list_of_life_image)
 
         pygame.time.delay(10)
         pygame.display.flip()
@@ -109,11 +101,10 @@ def fall_show(player, coin, bucket):
         bucket = class_function_of_bucket.bucket_location_movement(bucket, coin.screen, coin.level)
 
         text_show_money = Text('original', 20, '획득한 금액: ' + str(player.collected_money) + ' 원', 550, 50)
-        text_show_time = Text('original', 20, '게임 시간: ' + str(time.time() - player.start_time), 550, 80)
         list_of_life_image = []
         for i in range(player.life_left):
             list_of_life_image.append(Image("life.png", 650 - i * 35, 100, 25, 25))
-        show_my_score(coin.screen, player, text_show_money, text_show_time, list_of_life_image)
+        show_my_score(coin.screen, text_show_money, list_of_life_image)
 
         pygame.display.update()
         pygame.time.delay(10)
