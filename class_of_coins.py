@@ -1,3 +1,4 @@
+# 진자운동 참고 링크 https://pinkwink.kr/683
 import pygame
 import numpy as np
 import random
@@ -27,7 +28,7 @@ def calcODEFunc(x_val, v_val):
     return -pen_fm / (pen_m * pen_l * pen_l + pen_J) * v_val - pen_m * pen_g * pen_l / (pen_m * pen_l * pen_l + pen_J) * x_val
 
 
-# Runge Kutta 미방 함수 구현하기
+# Runge Kutta 미방 함수 구현하기, 이 함수를 링크에서 참조하였어요!
 def solveODEusingRK4(x, v):
     dt = 0.05
     kx1 = v

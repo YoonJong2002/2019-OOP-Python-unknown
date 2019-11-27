@@ -97,6 +97,7 @@ def fall_show(player, coin, bucket):
             loop_flag = False
         t = t + dt
         coin.screen.fill((255, 255, 255))
+        pygame.draw.line(coin.screen, (0, 0, 0), (10, 20), (700, 20), 10)  # 줄이 매달린 천장
         coin_x = coin.coin_falls(t, coin.v_x, coin.v_y)
         bucket = class_function_of_bucket.bucket_location_movement(bucket, coin.screen, coin.level)
 
@@ -107,7 +108,6 @@ def fall_show(player, coin, bucket):
         show_my_score(coin.screen, text_show_money, list_of_life_image)
 
         pygame.display.update()
-        pygame.time.delay(10)
         pygame.display.flip()
     return coin_x, bucket.bucket_x
 

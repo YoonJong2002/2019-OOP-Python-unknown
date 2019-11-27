@@ -37,6 +37,7 @@ def bucket_location_movement(Bucket, screen, level):
             Bucket.dx = Bucket.bucket_v
         if Bucket.bucket_x >= 600:
             Bucket.dx = -Bucket.bucket_v
+        Bucket.bucket_x = Bucket.bucket_x + Bucket.dx
         bucket_img.loca_x = Bucket.bucket_x + Bucket.dx - bucket_img.size_x/2
         bucket_img.screen_image_show(screen)
         return Bucket
