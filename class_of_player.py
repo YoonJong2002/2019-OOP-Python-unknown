@@ -3,6 +3,7 @@ class Player:
         self.player_name = player_name
         self.life_left = 5
         self.collected_money = 0
+        self.start_time = 0
         self.time_spent = 0
 
     def did_you_die(self):

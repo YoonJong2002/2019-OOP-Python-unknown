@@ -31,6 +31,8 @@ def show_ranking(screen, list_of_players, my_rank):
         :param list_of_players: 이때까지 플레이한 플레이어 객체들의 리스트
         :return: 없음
     """
+    pass
+    """
     text_my_rank = class_of_text_and_image.Text('bold', 35, '하늘에서 동전이 떨어진다', 350, 50)
     if my_rank >10:
         pass
@@ -44,7 +46,7 @@ def show_ranking(screen, list_of_players, my_rank):
             if event.type == pygame.KEYDOWN:
                 return
         text_my_rank.screen_text_show(screen)
-
+    """
 
 def play_again(screen):
     """

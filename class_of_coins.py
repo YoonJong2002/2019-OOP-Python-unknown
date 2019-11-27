@@ -4,22 +4,6 @@ import random
 from class_of_text_and_image import *
 from pygame.locals import *
 
-srf_h = 700
-srf_w = 500
-
-coin_size = 30
-coin_img = pygame.image.load("coin.png")
-coin_img_set = pygame.transform.scale(coin_img, (coin_size, coin_size))
-
-bucket_w = 100
-bucket_h = 80
-bucket_img = pygame.image.load("bucket.png")
-bucket_img_set = pygame.transform.scale(bucket_img, (bucket_h, bucket_w))
-
-dt = 0.05
-t = 0
-v = 0
-x = 30 * np.pi / 180    # x는 rad 단위
 pen_fm = 0.01
 pen_m = 0.1
 pen_l = 100 * 0.01
@@ -39,23 +23,24 @@ def keyboard():
             return 2
 
 
-def calcODEFunc(tVal, xVal, vVal):
-    return -pen_fm / (pen_m * pen_l * pen_l + pen_J) * vVal - pen_m * pen_g * pen_l / (pen_m * pen_l * pen_l + pen_J) * xVal
+def calcODEFunc(x_val, v_val):
+    return -pen_fm / (pen_m * pen_l * pen_l + pen_J) * v_val - pen_m * pen_g * pen_l / (pen_m * pen_l * pen_l + pen_J) * x_val
 
 
 # Runge Kutta 미방 함수 구현하기
-def solveODEusingRK4(t, x, v):
+def solveODEusingRK4(x, v):
+    dt = 0.05
     kx1 = v
-    kv1 = calcODEFunc(t, x, v)
+    kv1 = calcODEFunc(x, v)
 
     kx2 = v + dt * kv1 / 2
-    kv2 = calcODEFunc(t + dt / 2, x + dt * kx1 / 2, v + dt * kv1 / 2)
+    kv2 = calcODEFunc(x + dt * kx1 / 2, v + dt * kv1 / 2)
 
     kx3 = v + dt * kv2 / 2
-    kv3 = calcODEFunc(t + dt / 2, x + dt * kx2 / 2, v + dt * kv2 / 2)
+    kv3 = calcODEFunc(x + dt * kx2 / 2, v + dt * kv2 / 2)
 
     kx4 = v + dt * kv3
-    kv4 = calcODEFunc(t + dt, x + dt * kx3, v + dt * kv3)
+    kv4 = calcODEFunc(x + dt * kx3, v + dt * kv3)
 
     dx = dt * (kx1 + 2 * kx2 + 2 * kx3 + kx4) / 6
     dv = dt * (kv1 + 2 * kv2 + 2 * kv3 + kv4) / 6
@@ -74,16 +59,17 @@ class BasicCoin:
         self.v_x = 0
         self.v_y = 0
 
-    def coin_init(self):
+    def coin_swing_init(self):
         return 30 * np.pi / 180, 0  # 진자 운동의 x, v 초기화
 
-    def coin_swing(self, t, x, v):
+    def coin_swing(self, x, v):
         """
         매 순간 코인의 좌표(x, y)를 받고 dt 이후의 x,y를 반환
-        :param srf:
+        :param x:
+        :param v:
         :return:
         """
-        [x, v] = solveODEusingRK4(t, x, v)  # x 는 각변위
+        [x, v] = solveODEusingRK4(x, v)  # x 는 각변위
         self.image.loca_x = gndCenterX + penLength * np.sin(x) - 15
         self.image.loca_y = gndCenterY + penLength * np.cos(x) - 15
         self.image.screen_image_show(self.screen)
@@ -126,6 +112,7 @@ class EasyCoin(BasicCoin):
         self.neworiginY = 0
         self.v_x = 0
         self.v_y = 0
+
 
 class MediumCoin(BasicCoin):
     def __init__(self, cost, screen):

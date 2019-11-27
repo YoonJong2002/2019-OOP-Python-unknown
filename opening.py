@@ -3,7 +3,7 @@
 
 import pygame
 import class_of_player
-import class_of_text_and_image
+from class_of_text_and_image import *
 
 
 def set_screen():
@@ -28,12 +28,12 @@ def opening(screen):
     finished = False
     flag_id_input = False
 
-    text_title = class_of_text_and_image.Text('bold', 35, '하늘에서 동전이 떨어진다', 450, 200)
-    text_subtitle = class_of_text_and_image.Text('original', 20, 'PRESS ANY KEY', 450, 300)
+    text_title = Text('bold', 35, '하늘에서 동전이 떨어진다', 450, 200)
+    text_subtitle = Text('original', 20, 'PRESS ANY KEY', 450, 300)
 
-    coin_img_1 = class_of_text_and_image.Image("coin.png", 70, 80, 50, 50)
-    coin_img_2 = class_of_text_and_image.Image("coin.png", 120, 120, 50, 50)
-    treasure_img = class_of_text_and_image.Image("treasure.png", 60, 200, 150, 150)
+    coin_img_1 = Image("coin.png", 70, 80, 50, 50)
+    coin_img_2 = Image("coin.png", 120, 120, 50, 50)
+    treasure_img = Image("treasure.png", 60, 200, 150, 150)
 
     while not finished:
         for event in pygame.event.get():
@@ -66,11 +66,11 @@ def enter_id(screen):
         :return: 입력받은 플레이어 아이디(문자열)
     """
 
-    coin_img_1 = class_of_text_and_image.Image("coin.png", 70, 80, 50, 50)
-    coin_img_2 = class_of_text_and_image.Image("coin.png", 120, 120, 50, 50)
-    treasure_img = class_of_text_and_image.Image("treasure.png", 60, 200, 150, 150)
-    text_title = class_of_text_and_image.Text('bold', 35, '하늘에서 동전이 떨어진다', 450, 200)
-    text_enter_id = class_of_text_and_image.Text('original', 20, 'ENTER YOUR ID', 450, 260)
+    coin_img_1 = Image("coin.png", 70, 80, 50, 50)
+    coin_img_2 = Image("coin.png", 120, 120, 50, 50)
+    treasure_img = Image("treasure.png", 60, 200, 150, 150)
+    text_title = Text('bold', 35, '하늘에서 동전이 떨어진다', 450, 200)
+    text_enter_id = Text('original', 20, 'ENTER YOUR ID', 450, 260)
 
     string_player_id = ''
 
@@ -88,7 +88,7 @@ def enter_id(screen):
                 else:
                     string_player_id = string_player_id + event.unicode
 
-        text_player_id = class_of_text_and_image.Text('original', 20, string_player_id, 450, 300)
+        text_player_id = Text('original', 20, string_player_id, 450, 300)
 
         screen.fill((255, 255, 255))
         text_title.screen_text_show(screen)
@@ -121,12 +121,12 @@ def game_explain(screen, player_name):
 
     text_explain = []
 
-    text_explain.append(class_of_text_and_image.Text('original', 16, explanation[0], 450, 90))
+    text_explain.append(Text('original', 16, explanation[0], 450, 90))
     for i in range(1, 10):
-        text_explain.append(class_of_text_and_image.Text('original', 16, explanation[i], 450, 100 + 35 * i))
-    coin_img_1 = class_of_text_and_image.Image("coin.png", 70, 80, 50, 50)
-    coin_img_2 = class_of_text_and_image.Image("coin.png", 120, 120, 50, 50)
-    treasure_img = class_of_text_and_image.Image("treasure.png", 60, 200, 150, 150)
+        text_explain.append(Text('original', 16, explanation[i], 450, 100 + 35 * i))
+    coin_img_1 = Image("coin.png", 70, 80, 50, 50)
+    coin_img_2 = Image("coin.png", 120, 120, 50, 50)
+    treasure_img = Image("treasure.png", 60, 200, 150, 150)
 
     finished = False
     while not finished:
