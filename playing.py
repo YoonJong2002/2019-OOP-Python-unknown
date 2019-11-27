@@ -17,6 +17,12 @@ def keyboard():
 
 
 def new_level_started(level, screen):
+    """
+    새로운 레벨이 시작될 때의 오프닝 화면을 보여줌
+    :param level: 현재의 level (easy, medium, hard)
+    :param screen: 출력할 스크린
+    :return: 없음
+    """
     text_new_level = Text('original', 30, level + '  모드를 시작합니다', 350, 200)
     text_give_life = Text('original', 15, '새로운 생명이 지급되었습니다!', 350, 300)
     life_image = Image("life.png", 335, 330, 30, 30)
@@ -52,7 +58,7 @@ def swing_show(player, coin):
     진자 운동 과정을 화면에 출력함
     :param player: 플레이어 객체(화면에 점수를 표시하기 위해 전달함)
     :param coin: 진자 운동을 진행하는 동전 객체
-    :return:
+    :return: bucket 객체
     """
     [coin_x, coin_v] = coin.coin_swing_init()
     [bucket_x, bucket_v, dx, t] = class_function_of_bucket.bucket_init(coin.level)     # t = 0, bucket 의 x, v, dx를 초기화
@@ -114,7 +120,7 @@ def fall_show(player, coin, bucket):
 
 def did_coin_enter(coin_final_x, bucket_final_x):
     """
-    동전이 bucket에 들어갔는지를 판단하는 함수
+    동전이 bucket 에 들어갔는지를 판단하는 함수
     :param coin_final_x: 동전의 최종 위치
     :param bucket_final_x: bucket 의 최종 위치
     :return: 들어가면 True, 들어가지 않으면 False 리턴
