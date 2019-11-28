@@ -71,8 +71,8 @@ class BasicCoin:
         :return:
         """
         [x, v] = solveODEusingRK4(x, v)  # x 는 각변위
-        self.image.loca_x = gndCenterX + penLength * np.sin(x) - 15
-        self.image.loca_y = gndCenterY + penLength * np.cos(x) - 15
+        self.image.loca_x = gndCenterX + self.stringlength * np.sin(x) - 15
+        self.image.loca_y = gndCenterY + self.stringlength * np.cos(x) - 15
         self.image.screen_image_show(self.screen)
         pygame.draw.line(self.screen, (100, 100, 100), (gndCenterX, gndCenterY), (self.image.loca_x + 15, self.image.loca_y + 15), 2)  # 줄
         return x, v
@@ -84,10 +84,10 @@ class BasicCoin:
         :param v: 진자운동 마지막의 각 속도
         :return: 없음
         """
-        self.neworiginX = gndCenterX + penLength * np.sin(x)
-        self.neworiginY = gndCenterY + penLength * np.cos(x)
-        self.v_x = penLength * v * np.cos(-x)  # 줄을 끊은 순간에 동전의 속도
-        self.v_y = penLength * v * np.sin(-x)
+        self.neworiginX = gndCenterX + self.stringlength * np.sin(x)
+        self.neworiginY = gndCenterY + self.stringlength * np.cos(x)
+        self.v_x = self.stringlength * v * np.cos(-x)  # 줄을 끊은 순간에 동전의 속도
+        self.v_y = self.stringlength * v * np.sin(-x)
 
     def coin_falls(self, t, v_x, v_y):
         """
@@ -106,7 +106,7 @@ class EasyCoin(BasicCoin):
         self.cost = cost
         self.screen = screen
         self.level = 'easy'
-        self.stringlength = 10  # 코드 돌려보면서 적절히 쉬운 길이로 조절 부탁!
+        self.stringlength = 300  # 코드 돌려보면서 적절히 쉬운 길이로 조절 부탁!
         self.image = Image("coin.png", 0, 0, 30, 30)
         self.neworiginX = 0
         self.neworiginY = 0
@@ -119,7 +119,7 @@ class MediumCoin(BasicCoin):
         self.cost = cost
         self.screen = screen
         self.level = 'medium'
-        self.stringlength = 10  # 코드 돌려보면서 적절히 쉬운 길이로 조절 부탁!
+        self.stringlength = 250  # 코드 돌려보면서 적절히 쉬운 길이로 조절 부탁!
         self.image = Image("coin.png", 0, 0, 30, 30)
         self.neworiginX = 0
         self.neworiginY = 0
@@ -132,7 +132,7 @@ class HardCoin(BasicCoin):
         self.cost = cost
         self.screen = screen
         self.level = 'hard'
-        self.stringlength = 10  # 코드 돌려보면서 적절히 쉬운 길이로 조절 부탁!
+        self.stringlength = 200  # 코드 돌려보면서 적절히 쉬운 길이로 조절 부탁!
         self.image = Image("coin.png", 0, 0, 30, 30)
         self.neworiginX = 0
         self.neworiginY = 0
