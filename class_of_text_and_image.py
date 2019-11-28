@@ -16,7 +16,7 @@ class Text:
 
         self.obj = self.font.render(self.font_text, True, (0, 0, 0))
         self.text = self.obj.get_rect()
-        self.text.center = (font_x, font_y)
+        self.text.center = (self.font_x, self.font_y)
 
     def screen_text_show(self, screen):
         screen.blit(self.obj, self.text)

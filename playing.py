@@ -114,7 +114,7 @@ def fall_show(player, coin, bucket):
         show_my_score(coin.screen, text_show_money, list_of_life_image)
         pygame.time.delay(10)
         pygame.display.update()
-        pygame.display.flip()
+        # pygame.display.flip()
     return coin_x, bucket.bucket_x
 
 

@@ -8,14 +8,13 @@ import ending
 
 def ranking_init():
     f = open('ranking', 'wb')
-    pickle.dump([], f)
+    pickle.dump([]*10, f)
     f.close()
 
 
 # ranking_init()  # 전체 랭킹을 초기화할 때만 사용
 
 pygame.init()
-
 
 while True:
     screen = opening.set_screen()  # 기본 스크린 생성하여 screen 에 저장
