@@ -1,7 +1,7 @@
 # pygame 사용법 출처 https://kkamikoon.tistory.com/129 [컴퓨터를 다루다]
 # pygame 사용자 입력받기 https://code-examples.net/ko/q/2c3dbd7
 
-import pygame
+import sys
 import class_of_player
 from class_of_text_and_image import *
 
@@ -38,7 +38,7 @@ def opening(screen):
     while not finished:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                finished = True
+                sys.exit()
             if event.type == pygame.KEYDOWN:
                 flag_id_input = True
 
@@ -78,7 +78,7 @@ def enter_id(screen):
     while not finished:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                finished = True
+                sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     if len(string_player_id) > 0:
@@ -128,11 +128,10 @@ def game_explain(screen, player_name):
     coin_img_2 = Image("coin.png", 120, 120, 50, 50)
     treasure_img = Image("treasure.png", 60, 200, 150, 150)
 
-    finished = False
-    while not finished:
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                finished = True
+                sys.exit()
             if event.type == pygame.KEYDOWN:
                 return
         screen.fill((255, 255, 255))
@@ -141,6 +140,4 @@ def game_explain(screen, player_name):
         coin_img_1.screen_image_show(screen)
         coin_img_2.screen_image_show(screen)
         treasure_img.screen_image_show(screen)
-
         pygame.display.update()
-    return

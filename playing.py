@@ -3,17 +3,10 @@ import time
 import class_function_of_coins
 import class_function_of_bucket
 from class_of_text_and_image import *
+from keyboard_function import *
+import sys
 
 dt = 0.05
-
-
-def keyboard():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            return 1
-        elif event.type == pygame.KEYDOWN:
-            return 2
-        return 0
 
 
 def new_level_started(level, screen):
@@ -27,10 +20,12 @@ def new_level_started(level, screen):
     text_give_life = Text('original', 15, '새로운 생명이 지급되었습니다!', 350, 300)
     life_image = Image("life.png", 335, 330, 30, 30)
 
-    finished = False
-    while not finished:
-        if keyboard():
-            finished = True
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                return
+            if event.type == pygame.QUIT:
+                sys.exit()
 
         screen.fill((255, 255, 255))
         text_new_level.screen_text_show(screen)
