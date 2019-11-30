@@ -4,7 +4,12 @@ from class_of_text_and_image import *
 
 
 def bucket_init(level):
-    bucket_x = bucket_initial_location(level)
+    """
+    바구니를 초기화(새로고침)함
+    :param level: 단계 (easy, medium, hard)
+    :return: 버킷의 초기 x, v, dx, 그리고 t를 0으로 초기화함
+    """
+    bucket_x = bucket_initial_location(level)  # 초기 x를 설정받음
     t = 0
     bucket_v = 0.5
     dx = bucket_v
@@ -14,6 +19,7 @@ def bucket_init(level):
 def bucket_initial_location(level):
     """
     하나의 동전을 던질 때마다 bucket 의 초기 위치를 돌려줌
+    easy 인 경우 좁은범위에서 랜덤, 이외의 경우 조금 더 넓은 범위에서 랜덤
     :param level: easy / medium / hard
     :return: bucket 의 초기 x좌표
     """
@@ -25,11 +31,12 @@ def bucket_initial_location(level):
 
 def bucket_location_movement(Bucket, screen, level):
     """
-    hard 모드인 경우에만, dt가 지난 이후의 x좌표를 리턴해줌
-    :param x: 처음 x좌표
-    :return: dt 이후의 x좌표
+    버킷의 움직임을 제어함
+    :param Bucket: 버킷 객체, 버킷에 대한 변수가 담김
+    :param screen: 화면의 이름
+    :param level: 현재 난이도
+    :return:
     """
-
     bucket_img = Image("bucket.png", Bucket.bucket_x, 420, 100, 80)
 
     if level == 'hard':

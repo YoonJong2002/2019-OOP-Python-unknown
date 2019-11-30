@@ -12,11 +12,9 @@ pen_J = 0.02
 pen_g = 9.8
 gndCenterX = 350
 gndCenterY = 20
-penLength = pen_l * 100 * 2
-updatedX = updatedY = 0
 
 
-def calcODEFunc(x_val, v_val):      # 이 함수도 링크에서 참조하였어요!    https://pinkwink.kr/683
+def calcODEFunc(x_val, v_val):      # 이 함수를 링크에서 참조하였어요!    https://pinkwink.kr/683
     """
     복잡한 식을 계산하기 위한 함수이다.
     :param x_val: x 위치 값
@@ -93,26 +91,29 @@ class BasicCoin:
 
     def coin_falls(self, t, v_x, v_y):
         """
-        t 시간의 동전의 위치를 계산하여 표시함
+        t 시각에서 동전의 떨어지는 운동에서 위치를 계산하여 표시함
         :param t: 시간에 대한 변수
         :param v_x: 일정한 변수
         :param v_y: 일정한 변수
-        :return:
+        :return: 동전의 x 좌표
         """
         updatedX = v_x * t
         updatedY = v_y * t + 0.5 * 700 * t ** 2
-        self.image.loca_x = self.neworiginX + updatedX - 15
-        self.image.loca_y = self.neworiginY + updatedY - 15
-        self.image.screen_image_show(self.screen)
+        self.image.loca_x = self.neworiginX + updatedX - 15 #  동전의 이미지를 표시할 x 좌표
+        self.image.loca_y = self.neworiginY + updatedY - 15 #  동전의 이미지를 표시할 y 좌표
+        self.image.screen_image_show(self.screen)   # 이미지를 화면에 표시
         return self.neworiginX + updatedX
 
 
 class EasyCoin(BasicCoin):
+    """
+    BasicCoin 기본틀을 상속받음. 기본적인 상수를 수정함.
+    """
     def __init__(self, cost, screen):
         self.cost = cost
         self.screen = screen
         self.level = 'easy'
-        self.stringlength = 300  # 코드 돌려보면서 적절히 쉬운 길이로 조절 부탁!
+        self.stringlength = 300  # easy 단계의 줄길이
         self.image = Image("coin.png", 0, 0, 30, 30)
         self.neworiginX = 0
         self.neworiginY = 0
@@ -125,7 +126,7 @@ class MediumCoin(BasicCoin):
         self.cost = cost
         self.screen = screen
         self.level = 'medium'
-        self.stringlength = 250  # 코드 돌려보면서 적절히 쉬운 길이로 조절 부탁!
+        self.stringlength = 250  # medium 단계의 줄길이
         self.image = Image("coin.png", 0, 0, 30, 30)
         self.neworiginX = 0
         self.neworiginY = 0
@@ -138,7 +139,7 @@ class HardCoin(BasicCoin):
         self.cost = cost
         self.screen = screen
         self.level = 'hard'
-        self.stringlength = 200  # 코드 돌려보면서 적절히 쉬운 길이로 조절 부탁!
+        self.stringlength = 200 # hard 단계의 줄길이
         self.image = Image("coin.png", 0, 0, 30, 30)
         self.neworiginX = 0
         self.neworiginY = 0
