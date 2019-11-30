@@ -1,10 +1,7 @@
-import pygame
-import time
 import class_function_of_coins
 import class_function_of_bucket
 from class_of_text_and_image import *
 from keyboard_function import *
-import sys
 
 dt = 0.05
 
@@ -21,11 +18,8 @@ def new_level_started(level, screen):
     life_image = Image("life.png", 335, 330, 30, 30)
 
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                return
-            if event.type == pygame.QUIT:
-                sys.exit()
+        if keyboard() is True:
+            return
 
         screen.fill((255, 255, 255))
         text_new_level.screen_text_show(screen)
@@ -61,14 +55,14 @@ def swing_show(player, coin):
     [bucket_x, bucket_v, dx, t] = class_function_of_bucket.bucket_init(coin.level)     # t = 0, bucket 의 x, v, dx를 초기화
     bucket = class_function_of_bucket.Bucket(bucket_x, bucket_v, dx)     # bucket 객체를 이용해 bucket 관련 값 저장.
 
-    text_show_money = Text('original', 20, '획득한 금액: ' + str(player.collected_money) + ' 원', 550, 50)
+    text_show_money = Text('original', 20, '획득한 금액: ' + str(player.collected_money) + ' 원', 600, 50)
     list_of_life_image = []
     for i in range(player.life_left):
-        list_of_life_image.append(Image("life.png", 650 - i * 35, 100, 25, 25))
+        list_of_life_image.append(Image("life.png", 650 - i * 35, 80, 25, 25))
 
     loop_flag = True
     while loop_flag:
-        if keyboard() == 2:
+        if keyboard() is True:
             loop_flag = False
         coin.screen.fill((255, 255, 255))
         t = t + dt
@@ -95,7 +89,7 @@ def fall_show(player, coin, bucket):
     dt = 0.09
     loop_flag = True
     while loop_flag:
-        if keyboard() == 2:
+        if keyboard() is True:
             loop_flag = False
         if 420 <= coin.image.loca_y + 15:   # 동전이 바구니에 들어가면 while 문 종료
             loop_flag = False
@@ -105,14 +99,13 @@ def fall_show(player, coin, bucket):
         coin_x = coin.coin_falls(t, coin.v_x, coin.v_y)
         bucket = class_function_of_bucket.bucket_location_movement(bucket, coin.screen, coin.level)
 
-        text_show_money = Text('original', 20, '획득한 금액: ' + str(player.collected_money) + ' 원', 550, 50)
+        text_show_money = Text('original', 20, '획득한 금액: ' + str(player.collected_money) + ' 원', 600, 50)
         list_of_life_image = []
         for i in range(player.life_left):
-            list_of_life_image.append(Image("life.png", 650 - i * 35, 100, 25, 25))
+            list_of_life_image.append(Image("life.png", 650 - i * 35, 80, 25, 25))
         show_my_score(coin.screen, text_show_money, list_of_life_image)
         pygame.time.delay(10)
         pygame.display.update()
-        # pygame.display.flip()
     return coin_x, bucket.bucket_x
 
 
@@ -160,7 +153,6 @@ def easy_play(screen, player):
     new_level_started('easy', screen)
     for i in range(5):
         coin = class_function_of_coins.EasyCoin(easy_coin_cost, screen)
-        print(player.life_left, player.collected_money)
         if basic_playing_flow(player, coin) is True:  # 이번 레벨을 수행하는 도중에 생명 5개 소진 했을 경우, True
             return True
     return False
@@ -178,7 +170,6 @@ def medium_play(screen, player):
     new_level_started('medium', screen)
     for i in range(5):
         coin = class_function_of_coins.MediumCoin(medium_coin_cost, screen)
-        print(player.life_left, player.collected_money)
         if basic_playing_flow(player, coin) is True:
             return True
     return False
@@ -196,7 +187,6 @@ def hard_play(screen, player):
     new_level_started('hard', screen)
     for i in range(5):
         coin = class_function_of_coins.HardCoin(hard_coin_cost, screen)
-        print(player.life_left, player.collected_money)
         if basic_playing_flow(player, coin) is True:
             return True
     return False

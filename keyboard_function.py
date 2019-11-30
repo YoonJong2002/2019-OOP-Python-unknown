@@ -1,10 +1,13 @@
 import pygame
+import sys
 
 
 def keyboard():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            return 1
+            sys.exit()
+            return False
         elif event.type == pygame.KEYDOWN:
-            return 2
-        return 0
+            return True
+        else:
+            return False

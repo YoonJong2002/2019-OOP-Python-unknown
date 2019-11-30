@@ -2,6 +2,7 @@ import pygame
 import pickle
 import opening
 from class_of_text_and_image import *
+from keyboard_function import *
 
 
 def insert_player_in_list(player):
@@ -34,13 +35,13 @@ def show_ranking(screen, list_of_players, my_rank):
     """
     text_my_rank = Text('bold', 35, '당신의 랭킹은 ' + str(my_rank) + '위입니다!', 350, 50)
     text_rankings = [[Text('original', 20, '순위', 90, 110), Text('original', 20, 'ID', 190, 110),
-                      Text('original', 20, '모은 금액(원)', 340, 110), Text('original', 20, '남은 생명', 450, 110),
+                      Text('original', 20, '모은 금액(원)', 340, 110), Text('original', 20, '남은 생명', 460, 110),
                       Text('original', 20, '플레이 시간(초)', 600, 110)]]
     for i in range(min(len(list_of_players), 10)):
         text_rankings.append([Text('original', 20, str(i+1), 90, 140 + 30 * i),
                               Text('original', 20, list_of_players[i].player_name, 190, 140 + 30 * i),
                               Text('original', 20, str(list_of_players[i].collected_money), 340, 140 + 30 * i),
-                              Text('original', 20, str(list_of_players[i].life_left), 450, 140 + 30 * i),
+                              Text('original', 20, str(list_of_players[i].life_left), 460, 140 + 30 * i),
                               Text('original', 20, str(int(list_of_players[i].time_spent)), 600, 140 + 30 * i)])
 
     if my_rank <= 10:
@@ -56,13 +57,9 @@ def show_ranking(screen, list_of_players, my_rank):
                          Text('bold', 20, str(list_of_players[my_rank-1].life_left), 450, 450),
                          Text('bold', 20, str(int(list_of_players[my_rank-1].time_spent)), 600, 450)]
 
-    finished = False
-    while not finished:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                finished = True
-            if event.type == pygame.KEYDOWN:
-                return
+    while True:
+        if keyboard() is True:
+            return
         screen.fill((255, 255, 255))
         text_my_rank.screen_text_show(screen)
         for i in text_rankings:
@@ -83,11 +80,10 @@ def play_again(screen):
     """
     text_ask = Text('original', 20, '다시 플레이하시겠습니까? (y or n)', 350, 250)
 
-    finished = False
-    while not finished:
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                finished = True
+                sys.exit()
             if event.type == pygame.KEYDOWN:
                 return event.unicode.lower().startswith('y')
         screen.fill((255, 255, 255))
