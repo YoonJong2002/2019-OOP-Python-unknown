@@ -16,14 +16,6 @@ penLength = pen_l * 100 * 2
 updatedX = updatedY = 0
 
 
-def keyboard():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            return 1
-        if event.type == pygame.KEYDOWN:
-            return 2
-
-
 def calcODEFunc(x_val, v_val):
     return -pen_fm / (pen_m * pen_l * pen_l + pen_J) * v_val - pen_m * pen_g * pen_l / (pen_m * pen_l * pen_l + pen_J) * x_val
 
@@ -50,16 +42,6 @@ def solveODEusingRK4(x, v):
 
 
 class BasicCoin:
-    def __init__(self, screen, cost, level):
-        self.cost = cost
-        self.level = level
-        self.screen = screen
-        self.image = Image("coin.png", 0, 0, 30, 30)
-        self.neworiginX = 0
-        self.neworiginY = 0
-        self.v_x = 0
-        self.v_y = 0
-
     def coin_swing_init(self):
         return 30 * np.pi / 180, 0  # 진자 운동의 x, v 초기화
 
