@@ -1,6 +1,6 @@
 import pygame
 import time
-import class_of_coins
+import class_function_of_coins
 import class_function_of_bucket
 from class_of_text_and_image import *
 
@@ -161,7 +161,7 @@ def easy_play(screen, player):
     easy_coin_cost = 50
     new_level_started('easy', screen)
     for i in range(5):
-        coin = class_of_coins.EasyCoin(easy_coin_cost, screen)
+        coin = class_function_of_coins.EasyCoin(easy_coin_cost, screen)
         print(player.life_left, player.collected_money)
         if basic_playing_flow(player, coin) is True:  # 이번 레벨을 수행하는 도중에 생명 5개 소진 했을 경우, True
             return True
@@ -179,7 +179,7 @@ def medium_play(screen, player):
     player.life_left = player.life_left + 1
     new_level_started('medium', screen)
     for i in range(5):
-        coin = class_of_coins.MediumCoin(medium_coin_cost, screen)
+        coin = class_function_of_coins.MediumCoin(medium_coin_cost, screen)
         print(player.life_left, player.collected_money)
         if basic_playing_flow(player, coin) is True:
             return True
@@ -197,7 +197,7 @@ def hard_play(screen, player):
     player.life_left = player.life_left + 1
     new_level_started('hard', screen)
     for i in range(5):
-        coin = class_of_coins.HardCoin(hard_coin_cost, screen)
+        coin = class_function_of_coins.HardCoin(hard_coin_cost, screen)
         print(player.life_left, player.collected_money)
         if basic_playing_flow(player, coin) is True:
             return True
