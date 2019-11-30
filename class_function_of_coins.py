@@ -99,8 +99,8 @@ class BasicCoin:
         """
         updatedX = v_x * t
         updatedY = v_y * t + 0.5 * 700 * t ** 2
-        self.image.loca_x = self.neworiginX + updatedX - 15 #  동전의 이미지를 표시할 x 좌표
-        self.image.loca_y = self.neworiginY + updatedY - 15 #  동전의 이미지를 표시할 y 좌표
+        self.image.loca_x = self.neworiginX + updatedX - 15  # 동전의 이미지를 표시할 x 좌표
+        self.image.loca_y = self.neworiginY + updatedY - 15  # 동전의 이미지를 표시할 y 좌표
         self.image.screen_image_show(self.screen)   # 이미지를 화면에 표시
         return self.neworiginX + updatedX
 

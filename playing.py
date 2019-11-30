@@ -81,8 +81,8 @@ def fall_show(player, coin, bucket):
     """
     동전의 포물선 운동 과정을 화면에 출력함
     :param player: 플레이어 객체(화면에 점수를 표시하기 위해 전달함)
-    :param coin:
-    :param bucket:
+    :param coin: 동전 객체
+    :param bucket: bucket 객체
     :return: coin 과 bucket 의 최종 x 좌표값(각각 해서 2개의 리턴값)
     """
     t = 0
@@ -118,10 +118,8 @@ def did_coin_enter(coin_final_x, bucket_final_x):
     """
     bucket_w = 100
     if abs(coin_final_x - bucket_final_x) <= bucket_w / 2:
-        print('yay')
         return True
     else:
-        print('aww')
         return False
 
 
