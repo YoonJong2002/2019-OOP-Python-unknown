@@ -86,7 +86,7 @@ def fall_show(player, coin, bucket):
     :return: coin 과 bucket 의 최종 x 좌표값(각각 해서 2개의 리턴값)
     """
     t = 0
-    dt = 0.09
+    dt = 0.08
     loop_flag = True
     while loop_flag:
         if keyboard() is True:
@@ -117,7 +117,8 @@ def did_coin_enter(coin_final_x, bucket_final_x):
     :return: 들어가면 True, 들어가지 않으면 False 리턴
     """
     bucket_w = 100
-    if abs(coin_final_x - bucket_final_x) <= bucket_w / 2:
+    # if abs(coin_final_x - bucket_final_x) <= bucket_w / 2:
+    if abs(coin_final_x - bucket_final_x) <= bucket_w /1.7:
         return True
     else:
         return False
