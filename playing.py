@@ -60,6 +60,8 @@ def swing_show(player, coin):
     :param coin: 진자 운동을 진행하는 동전 객체
     :return: bucket 객체
     """
+    t = 0
+    dt = 0.02
     [coin_x, coin_v] = coin.coin_swing_init()
     [bucket_x, bucket_v, dx, t] = class_function_of_bucket.bucket_init(coin.level)     # t = 0, bucket 의 x, v, dx를 초기화
     bucket = class_function_of_bucket.Bucket(bucket_x, bucket_v, dx)     # bucket 객체를 이용해 bucket 관련 값 저장.
@@ -95,6 +97,7 @@ def fall_show(player, coin, bucket):
     :return: coin 과 bucket 의 최종 x 좌표값(각각 해서 2개의 리턴값)
     """
     t = 0
+    dt = 0.09
     loop_flag = True
     while loop_flag:
         if keyboard() == 2:
