@@ -3,8 +3,6 @@ import class_function_of_bucket
 from class_of_text_and_image import *
 from keyboard_function import *
 
-dt = 0.05
-
 
 def new_level_started(level, screen):
     """
@@ -117,7 +115,6 @@ def did_coin_enter(coin_final_x, bucket_final_x):
     :return: 들어가면 True, 들어가지 않으면 False 리턴
     """
     bucket_w = 100
-    # if abs(coin_final_x - bucket_final_x) <= bucket_w / 2:
     if abs(coin_final_x - bucket_final_x) <= bucket_w /1.7:
         return True
     else:

@@ -139,7 +139,7 @@ class HardCoin(BasicCoin):
         self.cost = cost
         self.screen = screen
         self.level = 'hard'
-        self.stringlength = 200 # hard 단계의 줄길이
+        self.stringlength = 200  # hard 단계의 줄길이
         self.image = Image("coin.png", 0, 0, 30, 30)
         self.neworiginX = 0
         self.neworiginY = 0
