@@ -54,7 +54,7 @@ def show_ranking(screen, list_of_players, my_rank):
         text_my_score = [Text('bold', 20, str(my_rank), 90, 450),
                          Text('bold', 20, list_of_players[my_rank-1].player_name, 190, 450),
                          Text('bold', 20, str(list_of_players[my_rank-1].collected_money), 340, 450),
-                         Text('bold', 20, str(list_of_players[my_rank-1].life_left), 450, 450),
+                         Text('bold', 20, str(list_of_players[my_rank-1].life_left), 460, 450),
                          Text('bold', 20, str(int(list_of_players[my_rank-1].time_spent)), 600, 450)]
 
     while True:
